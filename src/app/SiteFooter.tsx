@@ -5,21 +5,9 @@ export function SiteFooter() {
   return (
     <footer className="footer">
       <div className="wrap footer__grid">
-        <div
-          className="stack"
-          style={{ '--flow': '0.6em' } as React.CSSProperties}
-        >
+        <div>
           <p className="nav__brand">
             Automation Risk and the Public Balance Sheet
-          </p>
-          <p>
-            Research by Nathan Barnard. A public website: no sign-in, no
-            tracking, no server.
-          </p>
-          <p>
-            The diagrams on this site are editorial illustrations of a
-            mechanism. None of them reports measured data, a forecast or a
-            policy estimate.
           </p>
         </div>
         <ul aria-label="Site">
@@ -30,10 +18,16 @@ export function SiteFooter() {
             <a href={routes.explore}>The Public Balance Sheet Lab</a>
           </li>
           <li>
+            <a href={routes.scenarios}>Scenarios</a>
+          </li>
+          <li>
+            <a href={routes.findings}>Findings</a>
+          </li>
+          <li>
             <a href={routes.research}>Read further</a>
           </li>
           <li>
-            <a href={routes.dashboard}>Research dashboard</a>
+            <a href={routes.dashboard}>Indicators dashboard</a>
           </li>
         </ul>
         <ul aria-label="Research">

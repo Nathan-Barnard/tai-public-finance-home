@@ -12,6 +12,8 @@ export function href(path: string): string {
 export const routes = {
   home: href(''),
   explore: href('explore/'),
+  scenarios: href('scenarios/'),
+  findings: href('findings/'),
   research: href('research/'),
   dashboard: href('dashboard/'),
 } as const;

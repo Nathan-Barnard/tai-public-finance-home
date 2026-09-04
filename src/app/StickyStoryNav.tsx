@@ -5,7 +5,14 @@ import { homeAnchor, routes } from '@/lib/paths';
 
 import { CloseIcon, MenuIcon } from '@/components/Icons';
 
-export type NavPage = 'home' | 'explore' | 'research' | 'dashboard' | 'other';
+export type NavPage =
+  | 'home'
+  | 'explore'
+  | 'scenarios'
+  | 'findings'
+  | 'research'
+  | 'dashboard'
+  | 'other';
 
 type Props = {
   page: NavPage;
@@ -39,6 +46,8 @@ export function StickyStoryNav({
 
   const routeItems = [
     { id: 'explore', label: 'Explore', href: routes.explore },
+    { id: 'scenarios', label: 'Scenarios', href: routes.scenarios },
+    { id: 'findings', label: 'Findings', href: routes.findings },
     { id: 'research', label: 'Read', href: routes.research },
     { id: 'dashboard', label: 'Dashboard', href: routes.dashboard },
   ];

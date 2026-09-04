@@ -1,0 +1,47 @@
+name: Refresh indicators
+
+# Re-downloads the dashboard's time series from their public sources, and
+# commits the frozen data file when anything changed. A push to main then
+# rebuilds and deploys the site through the deploy workflow.
+
+on:
+  schedule:
+    - cron: '0 6 6 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Fetch the indicator series
+        run: npm run data
+
+      - name: Check the site still builds
+        run: npm run check
+
+      - name: Commit the refreshed data
+        run: |
+          if git diff --quiet -- src/data/indicators.json; then
+            echo "No change in the indicator data."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/indicators.json
+          git commit -m "Refresh indicator data ($(date -u +%Y-%m-%d))"
+          git push

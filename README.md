@@ -16,14 +16,16 @@ develop the models and computational route in depth.
 
 ## The website
 
-Four static routes, all built from the same content files:
+Six static routes, all built from the same content files:
 
 | Route | What it is |
 | --- | --- |
 | `/` | The visual essay: full-viewport scenes, oversized interactive diagrams, an embedded lab |
 | `/explore/` | The Public Balance Sheet Lab: change an automation shock and what the public asset pays, compare public tools |
+| `/scenarios/` | The paper's cases drawn as outcomes, each with what a good public position looks like |
+| `/findings/` | What the research has established and how strongly, what is deliberately not reported, the notebook route |
 | `/research/` | A quiet library: the paper, its diagrams, the notebooks, the technical model, the repositories |
-| `/dashboard/` | A dated monitor of what is established, what is illustrative, what is not yet computed, and what is deliberately not reported |
+| `/dashboard/` | An indicators monitor: labour share, measures of automation, asset values, interest rates, public debt, work and wages, across seven economies |
 
 The site is static. It has no sign-in, no server, no private API, no runtime
 database, no tracking and no custom domain. Every route is prerendered to HTML and
@@ -40,8 +42,12 @@ npm run check      # lint, typecheck, unit tests, production build, copy scan
 npm run preview    # serves the production build at /tai-public-finance-home/
 ```
 
-`npm run build` runs the client build, a server build, and `scripts/prerender.mjs`,
-which renders each route into its HTML file. `npm run check:copy` then scans the
+`npm run data` downloads the dashboard's series from FRED, the World Bank, the IMF and
+Our World in Data into `src/data/indicators.json` with provenance; the site reads
+that frozen file at build time and makes no requests while a reader is on the page. A
+monthly workflow re-runs it and commits any change. `npm run build` runs the client
+build, a server build, and `scripts/prerender.mjs`, which renders each route into its
+HTML file. `npm run check:copy` then scans the
 rendered pages for banned language, internal research identifiers and numbered
 chapter ornaments. `npm run og` regenerates the social image and touch icon with
 headless Chrome.
@@ -52,18 +58,20 @@ Every push to `main` runs the full check and deploys `dist/` to GitHub Pages thr
 ### Layout
 
 ```text
-index.html, explore/, research/, dashboard/, 404.html   route entries and metadata
+index.html, explore/, scenarios/, findings/, research/, dashboard/, 404.html
+                        route entries and metadata
 src/entries/            one client entry per route
 src/pages/              page assemblies
 src/app/                shell, sticky navigation, progress rail, footer
 src/components/         the scenes, diagrams, lab and library
-src/content/            narrative content, verified links, library and dashboard data
+src/content/            narrative content, verified links, scenarios, findings, indicator copy
+src/data/               the frozen indicator series with provenance
 src/lib/                payoff geometry and the lab model, with node:test tests
 src/hooks/              media queries, in-view, scroll steps, tabs, autoplay
 src/styles/             design tokens, typography, scene, lab and library styles
 public/paper/           the paper and its online supplement (PDF)
 public/fonts/           bundled Latin subsets of Fraunces, Inter and JetBrains Mono
-scripts/                prerender, copy scan, social image
+scripts/                prerender, copy scan, social image, indicator fetch
 notebooks/              ordered reader notebooks and their manifest
 notebooks/data/         compact frozen exports with source hashes and status
 ```

@@ -12,11 +12,12 @@
     "check": "npm run lint && npm run typecheck && npm run test && npm run build && npm run check:copy",
     "check:copy": "node scripts/check-copy.mjs",
     "lint": "oxlint",
-    "format": "oxfmt src scripts index.html 404.html explore research dashboard vite.config.ts tsconfig.json package.json .oxlintrc.json .oxfmtrc.json .github/workflows/deploy-pages.yml",
-    "format:check": "oxfmt --check src scripts index.html 404.html explore research dashboard vite.config.ts tsconfig.json package.json .oxlintrc.json .oxfmtrc.json .github/workflows/deploy-pages.yml",
+    "format": "oxfmt src scripts index.html 404.html explore scenarios findings research dashboard vite.config.ts tsconfig.json package.json .oxlintrc.json .oxfmtrc.json .github/workflows/deploy-pages.yml",
+    "format:check": "oxfmt --check src scripts index.html 404.html explore scenarios findings research dashboard vite.config.ts tsconfig.json package.json .oxlintrc.json .oxfmtrc.json .github/workflows/deploy-pages.yml",
     "og": "node scripts/make-social-image.mjs",
     "test": "node --test src/lib/*.test.ts",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "data": "node scripts/fetch-indicators.mjs"
   },
   "dependencies": {
     "react": "19.2.8",

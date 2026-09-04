@@ -150,7 +150,7 @@ const timelineLayouts = {
   tall: { W: 700, H: 600, baseY: 400, jump: 130, fs: 22, fsBig: 24 },
 };
 
-function TimelineSvg({
+export function TimelineSvg({
   id,
   layout,
   t,
