@@ -2,20 +2,22 @@
 
 **Updated:** 4 September 2026
 
-**State:** complete first public notebook sequence
+**State:** complete first public notebook sequence; public website added
 
 ## Purpose
 
-TAI Public Finance Home is the reader-facing computational companion to the paper. Its
-job is to turn the important models, solution approaches, diagnostics, and results into
-an ordered notebook narrative. It is deliberately separate from both the interactive
-website and the repositories that own production solver code.
+TAI Public Finance Home is the reader-facing companion to the paper. Its public website
+introduces the question, mechanism, policy tools, and evidence boundary in ordinary
+language. The notebooks then turn the important models, solution approaches,
+diagnostics, and results into an ordered computational narrative. The repository remains
+separate from those that own production solver code.
 
 ## Current state
 
-The repository has a complete seven-notebook route, an authoring template, a public
-manifest, compact provenance-bearing exports, and structural, execution, and HTML
-render checks.
+The repository has a static GitHub Pages website and a complete seven-notebook route,
+with an authoring template, a public manifest, compact provenance-bearing exports, and
+structural, execution, and HTML render checks. The website requires no account or
+sign-in. Its current diagrams are synthetic illustrations, not empirical estimates.
 
 On 4 September 2026, the `main` branches of the five mapped implementation repositories
 contained no `.ipynb` files. The notebooks were therefore written here as thin public

@@ -2,33 +2,38 @@
 
 ## Purpose
 
-This repository is the public, reader-facing notebook home for the TAI public-finance
-project. It explains the models, computational choices, and accepted results through an
-ordered set of Jupyter notebooks. It is a presentation and reproduction layer, not the
-canonical owner of the economics, computational specifications, solver code, or run
-evidence.
+This repository is the public, reader-facing home for the TAI public-finance project.
+The GitHub Pages site gives a concise, interactive introduction; an ordered set of
+Jupyter notebooks explains the models and computational choices in depth. Both are
+presentation and reproduction layers, not the canonical owners of the economics,
+computational specifications, solver code, or run evidence.
 
 ## Start here
 
 1. Read [`README.md`](README.md) for the audience, notebook route, and setup.
 2. Read [`CURRENT_PROJECT_CONTEXT.md`](CURRENT_PROJECT_CONTEXT.md) for the present
    scope and upstream repository map.
-3. Read [`notebooks/README.md`](notebooks/README.md) before creating or revising a
+3. For website work, treat `app/page.tsx` and `app/globals.css` as single-writer files,
+   and treat `public/content/` as a versioned public release input.
+4. Read [`notebooks/README.md`](notebooks/README.md) before creating or revising a
    notebook.
-4. Inspect the exact upstream repository, commit, computation object, and frozen data
+5. Inspect the exact upstream repository, commit, computation object, and frozen data
    named in the notebook metadata before changing code or interpretation.
 
 ## Ownership and boundaries
 
 - This repository owns notebook order, reader explanations, thin notebook code,
   publication metadata, and render checks.
+- This repository also owns the public interface, release-ready website copy,
+  illustration assets, static build, and GitHub Pages deployment.
 - The upstream implementation repositories own model code, solvers, tests, dependency
   locks, and immutable computational evidence. Do not fork a solver into a notebook.
 - The research workspace owns claims, assumptions, assurance status, computational
   specifications, and result-use decisions. A notebook may explain or reproduce a
   frozen public object; it may not promote a provisional result.
-- The interactive explorer may consume selected frozen outputs from this repository.
-  It does not become the owner of the notebooks or their numerical provenance.
+- The interactive homepage may consume selected frozen outputs from the notebooks. It
+  does not become the owner of their numerical provenance. Internal research IDs and
+  unpublished-source metadata remain outside the public website bundle.
 
 If a notebook uncovers a discrepancy, preserve the observation and route the correction
 upstream. Do not silently repair a result only in the explanatory notebook.
@@ -59,7 +64,17 @@ superseded, or withdrawn.
 
 ## Validation
 
-Set up a fresh environment with:
+For the website, use Node.js 22.13 or later:
+
+```bash
+npm ci
+npm run check
+```
+
+Preview it locally with `npm run dev`. A push to `main` deploys the resulting static
+`dist/` directory through `.github/workflows/deploy-pages.yml`.
+
+For the notebooks, set up a fresh Python environment with:
 
 ```bash
 python3 -m venv .venv
@@ -94,22 +109,25 @@ frozen upstream evidence and review status.
 
 ## Worktrees and shared resources
 
-Use one branch and one Git worktree per write-enabled task. One writer owns the manifest
-and any notebook being revised. Parallel read-only review is fine; serialize changes to
-the same notebook, dependency file, or workflow. Use task-specific ports for Jupyter
-when more than one worktree is active.
+Use one branch and one Git worktree per write-enabled task. One writer owns the website
+entrypoint and release content; one writer owns the manifest and any notebook being
+revised. Parallel read-only review is fine. Serialize changes to the same interface,
+notebook, dependency file, or workflow. Use task-specific ports for local web or Jupyter
+previews when more than one worktree is active.
 
 ## Worktree readiness
 
 The repository is self-contained. A fresh worktree needs only tracked files plus the
-dependency-install command above. No ignored configuration, database, container,
-secret, or `.worktreeinclude` is required. The committed compact exports are sufficient
-for clean notebook execution; refreshing them requires separate local checkouts of the
-three named upstream repositories.
+Node and Python dependency-install commands above. No ignored configuration, database,
+container, secret, or `.worktreeinclude` is required. The committed compact exports are
+sufficient for clean notebook execution; refreshing them requires separate local
+checkouts of the named upstream repositories.
 
 ## Completion
 
-A notebook change is complete when its Markdown and outputs render, its code runs from
-the declared environment, every displayed result resolves to a pinned public source,
-the interpretation matches the exact model branch and status, and the manifest and
-reader route remain accurate.
+A website change is complete when lint, type-check, and the static build pass, its public
+claims remain below the release ceiling, and the GitHub Pages URL loads without a
+sign-in. A notebook change is complete when its Markdown and outputs render, its code
+runs from the declared environment, every displayed result resolves to a pinned public
+source, the interpretation matches the exact model branch and status, and the manifest
+and reader route remain accurate.

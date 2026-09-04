@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">Measurement and accounting come before causal identification</title>
+  <desc id="desc">A synthetic two-panel diagram. The left panel maps worker resources, tax bases, transfers, interest, and revaluations into household, Treasury, and balance-sheet objects. The right panel shows that two different shocks can generate the same measured deficit movement.</desc>
+  <defs>
+    <style>
+      .bg{fill:#fbfaf7}.panel{fill:#fff;stroke:#d8d3c8;stroke-width:1.5}.ink{fill:#252a31}.muted{fill:#666f7a}.bluefill{fill:#e9f2fb;stroke:#88add0;stroke-width:1.5}.greenfill{fill:#e9f5ef;stroke:#76ad91;stroke-width:1.5}.orangefill{fill:#fff2e8;stroke:#e3a175;stroke-width:1.5}.purplefill{fill:#eee9f8;stroke:#9980c1;stroke-width:1.5}.arrow{stroke:#252a31;stroke-width:2;fill:none;marker-end:url(#arrow)}.dash{stroke:#8a919a;stroke-width:1.5;stroke-dasharray:7 6}.label{font:600 16px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.body{font:14px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.small{font:12px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.heading{font:700 26px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.sub{font:15px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#252a31"/></marker>
+  </defs>
+  <rect class="bg" width="1200" height="700"/>
+  <text class="heading ink" x="60" y="52">Measurement is the map—not yet the causal answer</text>
+  <text class="sub muted" x="60" y="80">Synthetic accounting example; every arrow must have a definition, timing convention, and population</text>
+
+  <rect class="panel" x="55" y="112" width="655" height="520" rx="8"/>
+  <text class="label ink" x="85" y="150">A. Keep distinct economic objects distinct</text>
+  <rect class="bluefill" x="95" y="190" width="170" height="76" rx="8"/>
+  <text class="label ink" x="180" y="219" text-anchor="middle">Worker resources</text>
+  <text class="body ink" x="180" y="244" text-anchor="middle">wages • jobs • consumption</text>
+  <rect class="greenfill" x="295" y="190" width="170" height="76" rx="8"/>
+  <text class="label ink" x="380" y="219" text-anchor="middle">Tax bases</text>
+  <text class="body ink" x="380" y="244" text-anchor="middle">labour • capital • spending</text>
+  <rect class="orangefill" x="495" y="190" width="170" height="76" rx="8"/>
+  <text class="label ink" x="580" y="219" text-anchor="middle">Policy and funding</text>
+  <text class="body ink" x="580" y="244" text-anchor="middle">transfers • rates • maturity</text>
+  <line class="arrow" x1="180" y1="266" x2="180" y2="318"/>
+  <line class="arrow" x1="380" y1="266" x2="380" y2="318"/>
+  <line class="arrow" x1="580" y1="266" x2="580" y2="318"/>
+  <rect class="panel" x="95" y="320" width="170" height="90" rx="8"/>
+  <text class="label ink" x="180" y="350" text-anchor="middle">Household outcome</text>
+  <text class="body ink" x="180" y="375" text-anchor="middle">disposable resources</text>
+  <text class="small muted" x="180" y="396" text-anchor="middle">population must be fixed</text>
+  <rect class="panel" x="295" y="320" width="170" height="90" rx="8"/>
+  <text class="label ink" x="380" y="350" text-anchor="middle">Treasury cash</text>
+  <text class="body ink" x="380" y="375" text-anchor="middle">receipts − outlays</text>
+  <text class="small muted" x="380" y="396" text-anchor="middle">cash timing matters</text>
+  <rect class="panel" x="495" y="320" width="170" height="90" rx="8"/>
+  <text class="label ink" x="580" y="350" text-anchor="middle">Balance sheet</text>
+  <text class="body ink" x="580" y="375" text-anchor="middle">assets − liabilities</text>
+  <text class="small muted" x="580" y="396" text-anchor="middle">stocks are not flows</text>
+  <line class="arrow" x1="380" y1="410" x2="330" y2="458"/>
+  <line class="arrow" x1="580" y1="410" x2="480" y2="458"/>
+  <rect class="purplefill" x="180" y="460" width="400" height="82" rx="8"/>
+  <text class="label ink" x="380" y="491" text-anchor="middle">Stock change = transactions + revaluation + other changes</text>
+  <text class="body ink" x="380" y="518" text-anchor="middle">reconcile cash transactions with the observed stock movement</text>
+  <text class="small muted" x="105" y="590">Measurement can establish what moved, for whom, when, and in what units.</text>
+
+  <rect class="panel" x="740" y="112" width="405" height="520" rx="8"/>
+  <text class="label ink" x="770" y="150">B. The same observation can have different causes</text>
+  <rect class="bluefill" x="790" y="200" width="135" height="70" rx="8"/>
+  <text class="label ink" x="857" y="230" text-anchor="middle">Automation</text>
+  <text class="body ink" x="857" y="252" text-anchor="middle">worker squeeze</text>
+  <rect class="orangefill" x="960" y="200" width="135" height="70" rx="8"/>
+  <text class="label ink" x="1027" y="230" text-anchor="middle">Recession</text>
+  <text class="body ink" x="1027" y="252" text-anchor="middle">broad demand loss</text>
+  <line class="arrow" x1="857" y1="270" x2="922" y2="340"/>
+  <line class="arrow" x1="1027" y1="270" x2="962" y2="340"/>
+  <rect class="panel" x="815" y="342" width="255" height="90" rx="8"/>
+  <text class="label ink" x="942" y="375" text-anchor="middle">Measured deficit rises</text>
+  <text class="body ink" x="942" y="402" text-anchor="middle">same sign; different mechanism</text>
+  <line class="dash" x1="780" y1="470" x2="1105" y2="470"/>
+  <text class="label ink" x="942" y="508" text-anchor="middle">Identification supplies the comparison</text>
+  <text class="body ink" x="942" y="538" text-anchor="middle">exposure • reform • instrument • timing</text>
+  <text class="small muted" x="942" y="585" text-anchor="middle">Without it: descriptive bearing, not a causal label.</text>
+</svg>

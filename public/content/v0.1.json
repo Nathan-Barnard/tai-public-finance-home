@@ -1,0 +1,85 @@
+{
+  "version": "0.2.0-preview",
+  "reviewDate": "2026-09-04",
+  "implementationRepository": "https://github.com/Nathan-Barnard/tai-public-finance-home",
+  "scenarios": {
+    "downside": {
+      "label": "Worker downside",
+      "shortLabel": "Downside",
+      "worker": -58,
+      "market": 72,
+      "workerState": "Scarce",
+      "marketState": "Abundant",
+      "title": "The claim pays when worker resources are scarce.",
+      "explanation": "A public claim that pays in this state can move resources toward workers precisely when their resources are most scarce."
+    },
+    "upside": {
+      "label": "Unequal participation in upside",
+      "shortLabel": "Uneven upside",
+      "worker": 34,
+      "market": 82,
+      "workerState": "Improves",
+      "marketState": "Improves more",
+      "title": "Workers gain, but capital-market investors gain more.",
+      "explanation": "Insurance does not require workers to lose outright. A public claim can also share gains when workers benefit less than the investors who own and price it."
+    },
+    "neutral": {
+      "label": "Claim-neutral comparison",
+      "shortLabel": "Same exposure",
+      "worker": 56,
+      "market": 56,
+      "workerState": "Moves together",
+      "marketState": "Moves together",
+      "title": "Worker and market valuations move together.",
+      "explanation": "When worker and investor resources move together, this claim adds no insurance value for the public balance sheet."
+    }
+  },
+  "assetMenus": {
+    "none": {
+      "label": "No public risky claim",
+      "shortLabel": "No claim",
+      "directions": 0,
+      "marketed": "None of the two modeled risks.",
+      "residual": "Both modeled risks remain uncovered.",
+      "role": "Borrowing and saving can still move resources over time, but they cannot move resources between different states arriving at the same time."
+    },
+    "maintained": {
+      "label": "One public risky claim",
+      "shortLabel": "One claim",
+      "directions": 1,
+      "marketed": "The combination of risks that changes the claim’s payoff.",
+      "residual": "Another combination of risks does not change the claim’s payoff.",
+      "role": "Public holdings can provide insurance only along the pattern of risk carried by the traded payoff."
+    },
+    "complete": {
+      "label": "Two independent public claims",
+      "shortLabel": "Two claims",
+      "directions": 2,
+      "marketed": "Both risks in the local two-risk model.",
+      "residual": "No modeled risk is left outside the public payoff menu locally.",
+      "role": "A second independent payoff adds the missing hedge direction. It does not create a free return, give households new trading access, or remove financing limits."
+    }
+  },
+  "evidenceItems": [
+    {
+      "name": "Why a public claim may help workers",
+      "publicWording": "A public claim is valuable when it pays in states where an extra public pound matters more for workers than its market price suggests.",
+      "qualification": "This is a model mechanism, not a claim that public portfolios always improve welfare or minimize the volatility of worker consumption."
+    },
+    {
+      "name": "What one traded claim leaves uncovered",
+      "publicWording": "With two modeled risks and one risky claim, the government can insure the combination of risks that changes the claim’s payoff. Another combination remains uncovered.",
+      "qualification": "This is a local result within the maintained asset menu. It does not establish a global welfare loss or a complete-markets result."
+    },
+    {
+      "name": "The policy comparison being built",
+      "publicWording": "The planned comparison changes the capital-tax rule and the number of public risky claims, always starting from the same economy.",
+      "qualification": "The numerical comparison is not yet ready, so this site reports no ranking of instruments or welfare effects."
+    },
+    {
+      "name": "The measurement programme",
+      "publicWording": "The empirical work will measure how automation exposure is related to worker resources, the public budget, and the payoff of candidate public claims.",
+      "qualification": "That work is still at the measurement stage. No estimate or causal validation is reported here."
+    }
+  ]
+}
