@@ -4,58 +4,58 @@
     {
       "order": 0,
       "path": "notebooks/00_start_here.ipynb",
-      "title": "Start here",
-      "reader_question": "What is the paper doing, and how should these notebooks be read?",
+      "title": "A computational guide",
+      "reader_question": "What is the paper's central idea, and which notebook answers each part?",
       "status": "available",
-      "evidence_status": "reader orientation"
+      "evidence_status": "map of the argument"
     },
     {
       "order": 1,
       "path": "notebooks/01_public_intermediation_problem.ipynb",
-      "title": "The public-intermediation problem",
-      "reader_question": "Why do workers and capital markets value automation states differently?",
+      "title": "Why correct market prices do not settle public value",
+      "reader_question": "Why can a government value a correctly priced claim differently from investors?",
       "status": "available",
-      "evidence_status": "conditional analytical characterization with illustration"
+      "evidence_status": "valuation mechanism and a two-state illustration"
     },
     {
       "order": 2,
       "path": "notebooks/02_brownian_valuation_and_payoff_span.ipynb",
-      "title": "Brownian valuation and payoff span",
+      "title": "One claim hedges one direction",
       "reader_question": "Which risks can a public claim hedge, and what remains unspanned?",
       "status": "available",
-      "evidence_status": "analytical geometry with illustration"
+      "evidence_status": "exact projection geometry and a figure"
     },
     {
       "order": 3,
       "path": "notebooks/03_lq_dynamics_and_impulse_responses.ipynb",
-      "title": "LQ dynamics and impulse responses",
-      "reader_question": "How is the transparent local model solved and checked?",
+      "title": "What the local model says after an automation displacement",
+      "reader_question": "What moves on impact, and how do capital and taxes adjust afterward?",
       "status": "available",
-      "evidence_status": "exploratory local computation"
+      "evidence_status": "an exploratory local calculation"
     },
     {
       "order": 4,
       "path": "notebooks/04_nonlinear_ramsey_problem.ipynb",
-      "title": "The nonlinear Ramsey problem",
-      "reader_question": "How does the richer dynamic problem change the analysis?",
+      "title": "The nonlinear policy problem—and what remains unsolved",
+      "reader_question": "What must a nonlinear solver establish beyond the local approximation?",
       "status": "available",
-      "evidence_status": "nonlinear formulation and pre-solve diagnostic"
+      "evidence_status": "the HJB and sampled domain checks; no solved policy"
     },
     {
       "order": 5,
       "path": "notebooks/05_partial_or_full_automation.ipynb",
-      "title": "Partial or full automation",
-      "reader_question": "How is uncertainty over the future production regime represented?",
+      "title": "One asset, two automation futures",
+      "reader_question": "Why does one equity position fail to insure two possible successor economies?",
       "status": "available",
-      "evidence_status": "analytical rank result with quarantine-affected diagnostics"
+      "evidence_status": "exact rank geometry; the transition remains unsolved"
     },
     {
       "order": 6,
       "path": "notebooks/06_instruments_and_welfare.ipynb",
-      "title": "Instruments and welfare",
-      "reader_question": "When do taxes, safe positions, and risky claims substitute for or complement one another?",
+      "title": "What taxes, safe finance, and risky claims each buy",
+      "reader_question": "Which matched welfare comparisons reveal substitution or complementarity?",
       "status": "available",
-      "evidence_status": "comparison contract; numerical welfare not yet accepted"
+      "evidence_status": "the matched welfare design; no numerical ranking yet"
     }
   ]
 }

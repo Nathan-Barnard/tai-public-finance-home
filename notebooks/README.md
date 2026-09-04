@@ -13,27 +13,30 @@ An `available` notebook may be analytical, illustrative, exploratory, or diagnos
 Its visible evidence label determines what a reader may infer. Availability never
 promotes an upstream computation.
 
-## Required narrative structure
+## Required reader jobs
 
-Use [`TEMPLATE.ipynb`](TEMPLATE.ipynb) as the starting point. A published notebook should
-contain these Markdown sections, adapted to the object rather than copied mechanically:
+Use [`TEMPLATE.ipynb`](TEMPLATE.ipynb) as a starting point, not as a sequence of headings
+to copy. A published notebook must do the following jobs, but it should combine and
+order them around its own economic argument:
 
-1. **Reader question** — the economic or computational question in plain language.
-2. **Answer in brief** — what the notebook establishes and how strongly.
-3. **Model and comparison** — actors, inherited state `(S_0, M_0)`, choices, timing,
+1. **Question and answer** — open with the economic problem and give the answer before
+   the machinery.
+2. **Model and comparison** — actors, inherited state `(S_0, M_0)`, choices, timing,
    closure, units, and what is held fixed.
-4. **Computational route** — why this method is appropriate and which alternatives or
+3. **Computational route** — why this method is appropriate and which alternatives or
    failure modes matter.
-5. **Implementation** — short, explained calls into pinned code or frozen data.
-6. **Diagnostics** — residuals, feasibility, boundaries, benchmark comparisons, and any
+4. **Implementation** — short, explained calls into pinned code or frozen data.
+5. **Diagnostics** — residuals, feasibility, boundaries, benchmark comparisons, and any
    uncertainty needed for the displayed use.
-7. **Economic interpretation** — mechanism, opposing force, and result scope.
-8. **Reproduce and trace** — repository, commit, environment, specification, run/data
+6. **Economic interpretation** — mechanism, opposing force, and result scope.
+7. **Reproduce and trace** — repository, commit, environment, specification, run/data
    provenance, and public download route.
 
 Put a substantive Markdown cell immediately before each substantive code cell. Explain
 what the code will calculate, why that calculation is needed, and how the output should
-be read. Do not use Markdown merely to restate the code line by line.
+be read. Do not use Markdown merely to restate the code line by line. Avoid repeated
+headings such as “Reader question,” “Answer in brief,” and “Current status” when a
+substantive heading can name the economic object or conclusion instead.
 
 ## Markdown that renders on GitHub
 

@@ -1,35 +1,49 @@
-# Automation Risk and the Public Balance Sheet
+# AI, Growth, and Who Gains
 
-The public home of the research project *Automation Risk and the Public Balance
-Sheet*. The [website](https://nathan-barnard.github.io/tai-public-finance-home/)
-is a long-form visual argument about one idea: automation pays the people who own
-it, and public ownership only helps workers when the public asset pays in the futures
-where they are left behind. Seven guided Jupyter notebooks then
-develop the models and computational route in depth.
+The public home of a research project on how AI might change who gains from
+economic growth. The [website](https://nathan-barnard.github.io/tai-public-finance-home/)
+sets out the question for a general reader, using historical evidence and an
+economic model to examine how ownership, taxes and public investment shape who
+benefits. Seven guided Jupyter notebooks then develop the models and the
+computational route in depth.
 
-> **Status:** the website is a complete visual essay with an interactive lab, a
-> research library and a dated research dashboard. Its diagrams are editorial
-> illustrations of a mechanism; none reports measured data, a forecast, a welfare
-> figure or a policy estimate. The notebooks distinguish analytical results,
-> exploratory computations and diagnostics, and withhold numerical claims that lack
-> accepted evidence.
+The site takes no position on what AI will do. It distinguishes economic growth
+from the distribution of that growth, and it separates worker income, investment
+returns and government revenue, because history shows they need not move together.
+
+> **Evidence boundary.** The research combines historical data with a theoretical
+> model, and the numerical work is still in progress. The site therefore reports
+> no calibrated fund size, policy forecast or estimated welfare gain. Its four
+> historical exhibits are descriptive national comparisons; none identifies
+> automation as the cause of a national outcome.
 
 ## The website
 
-Six static routes, all built from the same content files:
+Four public routes, plus a secondary indicators page, all built from the same
+content files:
 
 | Route | What it is |
 | --- | --- |
-| `/` | The visual essay: full-viewport scenes, oversized interactive diagrams, an embedded lab |
-| `/explore/` | The Public Balance Sheet Lab: change an automation shock and what the public asset pays, compare public tools |
-| `/scenarios/` | The paper's cases drawn as outcomes, each with what a good public position looks like |
-| `/findings/` | What the research has established and how strongly, what is deliberately not reported, the notebook route |
-| `/research/` | A quiet library: the paper, its diagrams, the notebooks, the technical model, the repositories |
-| `/dashboard/` | An indicators monitor: labour share, measures of automation, asset values, interest rates, public debt, work and wages, across seven economies |
+| `/` | The question, the four-way distribution split, the four evidence exhibits, what policy can change, and what the model adds |
+| `/evidence/` | The same four exhibits at greater length, with sources and construction |
+| `/explore/` | A thought experiment: choose how the gains are shared and how a public investment performs |
+| `/research/` | The question, what evidence and the model can each show, the current boundary, and related research |
+| `/dashboard/` | Longer-run indicators: the share of income going to labour, measures of automation, asset values, interest rates, government debt, work and wages |
 
 The site is static. It has no sign-in, no server, no private API, no runtime
-database, no tracking and no custom domain. Every route is prerendered to HTML and
-hydrated by a small per-page bundle, so the pages read fully before JavaScript runs.
+database, no tracking and no custom domain. Every route is prerendered to HTML
+and hydrated by a small per-page bundle, so each page reads fully before any
+JavaScript runs.
+
+### The four evidence exhibits
+
+Every figure is transcribed from the project's canonical descriptive evidence
+record and is pinned by unit tests in `src/lib/content.test.ts`:
+
+1. Worker outcomes in the United States and Germany when labour's share fell.
+2. The composition of German tax revenue between the 2000–03 and 2004–07 averages.
+3. Long-run total tax revenue in the United States, the United Kingdom and Germany.
+4. Equity returns in historically worker-strong and worker-weak years.
 
 ### Development
 
@@ -42,59 +56,61 @@ npm run check      # lint, typecheck, unit tests, production build, copy scan
 npm run preview    # serves the production build at /tai-public-finance-home/
 ```
 
-`npm run data` downloads the dashboard's series from FRED, the World Bank, the IMF and
-Our World in Data into `src/data/indicators.json` with provenance; the site reads
-that frozen file at build time and makes no requests while a reader is on the page. A
-monthly workflow re-runs it and commits any change. `npm run build` runs the client
-build, a server build, and `scripts/prerender.mjs`, which renders each route into its
-HTML file. `npm run check:copy` then scans the
-rendered pages for banned language, internal research identifiers and numbered
-chapter ornaments. `npm run og` regenerates the social image and touch icon with
-headless Chrome.
+`npm run build` runs the client build, a server build, and `scripts/prerender.mjs`,
+which renders each route into its HTML file. `npm run check:copy` then scans the
+rendered pages for removed sentences, paper terminology, excluded model numbers,
+internal research identifiers, American spellings and numbered chapter ornaments.
+`npm run data` refreshes the indicators from FRED, the World Bank, the IMF and
+Our World in Data into `src/data/indicators.json`; a monthly workflow re-runs it.
+`npm run og` regenerates the social image and touch icon.
 
-Every push to `main` runs the full check and deploys `dist/` to GitHub Pages through
+Every push to `main` runs the full check and deploys `dist/` through
 `.github/workflows/deploy-pages.yml`.
 
 ### Layout
 
 ```text
-index.html, explore/, scenarios/, findings/, research/, dashboard/, 404.html
+index.html, evidence/, explore/, research/, dashboard/, 404.html
                         route entries and metadata
 src/entries/            one client entry per route
 src/pages/              page assemblies
-src/app/                shell, sticky navigation, progress rail, footer
-src/components/         the scenes, diagrams, lab and library
-src/content/            narrative content, verified links, scenarios, findings, indicator copy
+src/app/                shell, masthead, footer
+src/components/         panels, exhibits, charts, the Explore interaction
+src/content/            all public wording, verified links, exhibit copy
+src/content/figures.ts  the exhibit figures, free of imports so tests can check them
 src/data/               the frozen indicator series with provenance
-src/lib/                payoff geometry and the lab model, with node:test tests
-src/hooks/              media queries, in-view, scroll steps, tabs, autoplay
-src/styles/             design tokens, typography, scene, lab and library styles
-public/paper/           the paper and its online supplement (PDF)
-public/fonts/           bundled Latin subsets of Fraunces, Inter and JetBrains Mono
+src/lib/                paths and the content tests
+src/styles/             tokens and typography, page styles, indicator styles
 scripts/                prerender, copy scan, social image, indicator fetch
+public/paper/           the paper and its five appendices
 notebooks/              ordered reader notebooks and their manifest
-notebooks/data/         compact frozen exports with source hashes and status
 ```
 
-Narrative content lives in `src/content/story.ts` as a list of sections, each with a
-visual specification; the components in `src/components/` draw them. Every payoff
-diagram is computed from `src/lib/geometry.ts`, so a public position only ever moves
-along a line and never rotates it.
+Public wording lives in `src/content/` and nowhere else, so the components that
+draw the site carry no copy.
 
 ## The notebooks
 
-Open [`notebooks/00_start_here.ipynb`](notebooks/00_start_here.ipynb). GitHub renders
-the Markdown, equations, code and saved output in the browser.
+Open [`notebooks/00_start_here.ipynb`](notebooks/00_start_here.ipynb). GitHub
+renders the Markdown, equations, code and saved output in the browser.
 
-| Order | Notebook | Reader question | Evidence shown |
+All seven notebooks render directly on GitHub. Some establish analytical relations;
+others explain calculations that are still exploratory. The nonlinear policy and
+matched welfare comparisons are not yet solved, and their notebooks stop where the
+current evidence stops.
+
+| Order | Notebook | Reader question | What is available |
 | ----: | --- | --- | --- |
-| 0 | Start here | What is the paper doing, and how should these notebooks be read? | Reader orientation |
-| 1 | [The public-intermediation problem](notebooks/01_public_intermediation_problem.ipynb) | Why do workers and capital markets value automation states differently? | Analytical, with illustration |
-| 2 | [Brownian valuation and payoff span](notebooks/02_brownian_valuation_and_payoff_span.ipynb) | Which risks can one public claim reach, and what remains outside it? | Analytical geometry, with illustration |
-| 3 | [LQ dynamics and impulse responses](notebooks/03_lq_dynamics_and_impulse_responses.ipynb) | How is the transparent local model solved and checked? | Exploratory local computation |
-| 4 | [The nonlinear Ramsey problem](notebooks/04_nonlinear_ramsey_problem.ipynb) | How does the richer dynamic problem change the analysis? | Formulation and pre-solve diagnostic |
-| 5 | [Partial or full automation](notebooks/05_partial_or_full_automation.ipynb) | How is uncertainty over the future production regime represented? | Analytical rank result; diagnostics withheld |
-| 6 | [Instruments and welfare](notebooks/06_instruments_and_welfare.ipynb) | When do taxes, safe positions and risky claims substitute for or complement one another? | Comparison design; no numerical welfare yet |
+| 0 | [A computational guide](notebooks/00_start_here.ipynb) | What is the paper's central idea, and which notebook answers each part? | Reader orientation |
+| 1 | [Why correct market prices do not settle public value](notebooks/01_public_intermediation_problem.ipynb) | Why can a government value a correctly priced claim differently from investors? | Conditional analysis with an illustration |
+| 2 | [One claim hedges one direction](notebooks/02_brownian_valuation_and_payoff_span.ipynb) | Which risks can a public claim hedge, and what remains unspanned? | Analytical geometry with an illustration |
+| 3 | [What the local model says after an automation displacement](notebooks/03_lq_dynamics_and_impulse_responses.ipynb) | What moves on impact, and how do capital and taxes adjust afterward? | Exploratory local computation |
+| 4 | [The nonlinear policy problem—and what remains unsolved](notebooks/04_nonlinear_ramsey_problem.ipynb) | What must a nonlinear solver establish beyond the local approximation? | HJB formulation and pre-solve diagnostic |
+| 5 | [One asset, two automation futures](notebooks/05_partial_or_full_automation.ipynb) | Why does one equity position fail to insure two possible successor economies? | Analytical rank result with diagnostic evidence |
+| 6 | [What taxes, safe finance, and risky claims each buy](notebooks/06_instruments_and_welfare.ipynb) | Which matched welfare comparisons reveal substitution or complementarity? | Comparison design; numerical welfare withheld |
+
+The sequence follows the paper's economic argument rather than the directory
+structure of the source code.
 
 ```bash
 python3 -m venv .venv
@@ -102,6 +118,12 @@ source .venv/bin/activate
 python3 -m pip install -r requirements-dev.txt
 python3 scripts/check_notebooks.py --execute
 ```
+
+## The paper
+
+The long-form working-paper set is in [`public/paper/`](public/paper) and described
+in [`paper/README.md`](paper/README.md). The website links to the main paper and to
+the descriptive-evidence appendix, which is the public source for the four exhibits.
 
 ## Source repositories
 
