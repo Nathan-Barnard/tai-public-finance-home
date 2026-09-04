@@ -42,6 +42,11 @@
     -webkit-font-smoothing: antialiased;
   }
 
+  sub {
+    font-size: 0.62em;
+    vertical-align: -0.2em;
+  }
+
   button,
   summary,
   a {
@@ -67,6 +72,28 @@
 
 ::selection {
   background: color-mix(in oklch, var(--teal) 24%, transparent);
+}
+
+.hero-grid {
+  background-image:
+    radial-gradient(
+      circle at 76% 18%,
+      color-mix(in oklch, var(--teal) 11%, transparent),
+      transparent 28rem
+    ),
+    linear-gradient(
+      color-mix(in oklch, var(--ink) 4%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in oklch, var(--ink) 4%, transparent) 1px,
+      transparent 1px
+    );
+  background-size:
+    auto,
+    44px 44px,
+    44px 44px;
 }
 
 @media (prefers-reduced-motion: reduce) {

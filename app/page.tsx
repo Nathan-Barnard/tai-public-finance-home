@@ -2,29 +2,20 @@
 
 import { useState } from 'react';
 import {
+  ArrowDownRight,
   ArrowRight,
-  BarChart3,
+  ArrowUpRight,
   BookOpen,
   Landmark,
   LineChart,
   PiggyBank,
-  ShieldCheck,
 } from 'lucide-react';
 
 import content from '@/public/content/v0.1.json';
 
 type ScenarioKey = keyof typeof content.scenarios;
-type AssetMenuKey = keyof typeof content.assetMenus;
 
-const scenarioOrder: ScenarioKey[] = ['downside', 'upside', 'neutral'];
-const assetOrder: AssetMenuKey[] = ['none', 'maintained', 'complete'];
-
-const evidenceLabels = [
-  'Shown here as a model result',
-  'Illustrated here; technical proof forthcoming',
-  'Comparison not yet computed',
-  'No estimates reported yet',
-];
+const scenarioOrder: ScenarioKey[] = ['downside', 'upside', 'together'];
 
 function SectionIntro({
   label,
@@ -33,48 +24,112 @@ function SectionIntro({
 }: {
   label: string;
   title: string;
-  copy: string;
+  copy?: string;
 }) {
   return (
-    <div className="max-w-3xl">
-      <p className="text-sm font-semibold text-rust">{label}</p>
-      <h2 className="mt-3 font-display text-[clamp(2.25rem,4.5vw,4.2rem)] leading-[1.02] tracking-[-0.04em]">
+    <div className="max-w-4xl">
+      <p className="text-xs font-bold uppercase tracking-[0.18em] text-rust">
+        {label}
+      </p>
+      <h2 className="mt-4 max-w-3xl font-display text-[clamp(2.4rem,5vw,4.8rem)] leading-[0.98] tracking-[-0.045em]">
         {title}
       </h2>
-      <p className="mt-5 max-w-2xl text-base leading-7 text-ink/68 sm:text-lg sm:leading-8">
-        {copy}
-      </p>
+      {copy && (
+        <p className="mt-6 max-w-2xl text-lg leading-8 text-ink/68">{copy}</p>
+      )}
     </div>
   );
 }
 
-function ValuationChart({ scenarioKey }: { scenarioKey: ScenarioKey }) {
+function HeroGraphic() {
+  return (
+    <figure className="relative overflow-hidden rounded-[2rem] border border-ink/10 bg-ink p-5 text-white shadow-[0_28px_80px_rgba(28,43,38,0.14)] sm:p-7">
+      <div className="absolute -right-16 -top-20 size-64 rounded-full bg-teal/35 blur-3xl" />
+      <div className="absolute -bottom-20 -left-10 size-60 rounded-full bg-rust/30 blur-3xl" />
+
+      <div className="relative">
+        <div className="flex items-center justify-between border-b border-white/15 pb-5">
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-white/55">
+            Who gets the upside?
+          </p>
+          <span className="size-2 rounded-full bg-rust" />
+        </div>
+
+        <div className="py-7 text-center sm:py-9">
+          <div className="mx-auto grid size-28 place-items-center rounded-full border border-white/20 bg-white/8 font-display text-2xl tracking-[-0.03em] shadow-[0_0_0_14px_rgba(255,255,255,0.025)] sm:size-32">
+            Automation
+          </div>
+        </div>
+
+        <div className="grid gap-3 sm:grid-cols-2">
+          <div className="rounded-2xl border border-white/12 bg-white/8 p-5">
+            <div className="flex items-center justify-between gap-3">
+              <p className="font-semibold">Capitalists</p>
+              <ArrowUpRight
+                className="size-5 text-[#80d2bc]"
+                aria-hidden="true"
+              />
+            </div>
+            <p className="mt-3 text-sm leading-6 text-white/62">
+              Own the assets that rise with profits.
+            </p>
+          </div>
+          <div className="rounded-2xl border border-white/12 bg-white/8 p-5">
+            <div className="flex items-center justify-between gap-3">
+              <p className="font-semibold">Workers</p>
+              <ArrowDownRight
+                className="size-5 text-[#f0a177]"
+                aria-hidden="true"
+              />
+            </div>
+            <p className="mt-3 text-sm leading-6 text-white/62">
+              Depend mainly on wages and public services.
+            </p>
+          </div>
+        </div>
+
+        <figcaption className="mt-5 text-sm leading-6 text-white/55">
+          New technology can grow the economy while splitting the gains.
+        </figcaption>
+      </div>
+    </figure>
+  );
+}
+
+function DistributionChart({ scenarioKey }: { scenarioKey: ScenarioKey }) {
   const scenario = content.scenarios[scenarioKey];
-  const workerPosition = Math.max(8, Math.min(92, (scenario.worker + 100) / 2));
-  const marketPosition = Math.max(8, Math.min(92, (scenario.market + 100) / 2));
+
+  const bar = (value: number, color: string) => {
+    const width = Math.abs(value) / 2;
+    const start = value < 0 ? 50 - width : 50;
+
+    return (
+      <span
+        className={`absolute top-1/2 h-3 -translate-y-1/2 rounded-full transition-[left,width] duration-500 ${color}`}
+        style={{ left: `${start}%`, width: `${width}%` }}
+      />
+    );
+  };
 
   return (
-    <figure className="rounded-xl border border-ink/12 bg-white p-5 sm:p-7">
-      <figcaption className="flex flex-wrap items-baseline justify-between gap-2 border-b border-ink/10 pb-4">
-        <span className="font-semibold">
-          How plentiful are resources in this state?
-        </span>
-        <span className="text-xs text-ink/48">Illustrative, not estimated</span>
+    <figure className="rounded-[1.75rem] border border-ink/10 bg-white p-5 shadow-[0_18px_55px_rgba(28,43,38,0.07)] sm:p-8">
+      <figcaption className="flex flex-wrap items-center justify-between gap-2 border-b border-ink/10 pb-5">
+        <span className="font-semibold">How incomes move after the shock</span>
       </figcaption>
 
-      <div className="mt-8 space-y-9">
+      <div className="mt-8 space-y-8">
         {[
           {
-            name: 'Workers and the public budget',
-            state: scenario.workerState,
-            position: workerPosition,
-            color: 'bg-rust',
+            name: 'Capitalists',
+            state: scenario.capitalState,
+            value: scenario.capital,
+            color: 'bg-teal',
           },
           {
-            name: 'Investors pricing the claim',
-            state: scenario.marketState,
-            position: marketPosition,
-            color: 'bg-teal',
+            name: 'Workers',
+            state: scenario.workerState,
+            value: scenario.worker,
+            color: 'bg-rust',
           },
         ].map((row) => (
           <div key={row.name}>
@@ -82,215 +137,275 @@ function ValuationChart({ scenarioKey }: { scenarioKey: ScenarioKey }) {
               <span className="font-semibold">{row.name}</span>
               <span className="text-ink/54">{row.state}</span>
             </div>
-            <div className="relative mt-4 h-px bg-ink/18" aria-hidden="true">
-              <span className="absolute -top-2 left-0 h-4 w-px bg-ink/18" />
-              <span className="absolute -top-2 right-0 h-4 w-px bg-ink/18" />
-              <span
-                className={`absolute -top-[7px] size-[15px] -translate-x-1/2 rounded-full ring-4 ring-white transition-[left] duration-500 ${row.color}`}
-                style={{ left: `${row.position}%` }}
-              />
+            <div
+              className="relative mt-4 h-10 rounded-full bg-paper"
+              aria-hidden="true"
+            >
+              <span className="absolute bottom-1 left-1/2 top-1 w-px bg-ink/20" />
+              {bar(row.value, row.color)}
             </div>
           </div>
         ))}
       </div>
 
-      <div className="mt-5 flex justify-between text-xs text-ink/45">
-        <span>Resources are scarce</span>
-        <span>Resources are plentiful</span>
+      <div className="mt-4 grid grid-cols-3 text-xs text-ink/42">
+        <span>Income falls</span>
+        <span className="text-center">No change</span>
+        <span className="text-right">Income rises</span>
       </div>
     </figure>
   );
 }
 
-function SpanDiagram({ directions }: { directions: number }) {
+function DiagramArrow() {
+  return (
+    <div className="hidden items-center md:flex" aria-hidden="true">
+      <span className="h-px w-full bg-ink/25" />
+      <ArrowRight className="-ml-1 size-4 shrink-0 text-ink/45" />
+    </div>
+  );
+}
+
+function StatePayoffGraphic() {
+  return (
+    <figure className="overflow-hidden rounded-[1.75rem] border border-ink/10 bg-white shadow-[0_18px_55px_rgba(28,43,38,0.07)]">
+      <figcaption className="border-b border-ink/10 px-5 py-4 text-sm font-semibold sm:px-8">
+        Two automation shocks. The same hit to workers. Only one asset helps.
+      </figcaption>
+      <div className="divide-y divide-ink/10">
+        <div className="p-5 sm:p-8">
+          <p className="mb-5 text-xs font-bold uppercase tracking-[0.16em] text-teal">
+            The asset matches the shock
+          </p>
+          <div className="grid gap-3 md:grid-cols-[1fr_42px_1fr_42px_1fr] md:items-center">
+            <div className="rounded-xl bg-[#f8e9e3] p-5">
+              <p className="font-semibold">Workers lose income</p>
+            </div>
+            <DiagramArrow />
+            <div className="rounded-xl bg-mist p-5">
+              <p className="font-semibold">The public asset rises</p>
+            </div>
+            <DiagramArrow />
+            <div className="rounded-xl bg-[#e4f1e9] p-5">
+              <p className="font-semibold">Government has money to respond</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="p-5 sm:p-8">
+          <p className="mb-5 text-xs font-bold uppercase tracking-[0.16em] text-rust">
+            The asset misses the shock
+          </p>
+          <div className="grid gap-3 md:grid-cols-[1fr_42px_1fr_42px_1fr] md:items-center">
+            <div className="rounded-xl bg-[#f8e9e3] p-5">
+              <p className="font-semibold">Workers lose income</p>
+            </div>
+            <DiagramArrow />
+            <div className="rounded-xl bg-paper p-5">
+              <p className="font-semibold">The public asset does not move</p>
+            </div>
+            <DiagramArrow />
+            <div className="rounded-xl bg-[#f8e9e3] p-5">
+              <p className="font-semibold">The hole in worker income remains</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </figure>
+  );
+}
+
+function PayoffSpanGraphic({ secondAsset }: { secondAsset: boolean }) {
   return (
     <svg
+      viewBox="0 0 680 480"
       className="h-auto w-full"
-      viewBox="0 0 620 390"
-      aria-labelledby="span-title span-description"
+      aria-labelledby="payoff-span-title payoff-span-description"
     >
-      <title id="span-title">Which risks can public claims cover?</title>
-      <desc id="span-description">
-        {directions === 0
-          ? 'Without a public risky claim, neither of the two modeled risk directions is covered.'
-          : directions === 1
-            ? 'One public risky claim covers one combination of risks and leaves another combination uncovered.'
-            : 'Two independent public risky claims cover both modeled risk directions.'}
+      <title id="payoff-span-title">
+        What one public asset can and cannot reach
+      </title>
+      <desc id="payoff-span-description">
+        {secondAsset
+          ? 'Two assets with different payoffs reach both parts of the automation shock.'
+          : 'One public asset reaches one part of the automation shock and misses another part.'}
       </desc>
       <defs>
         <marker
-          id="teal-arrow"
-          markerWidth="8"
-          markerHeight="8"
-          refX="6"
-          refY="3"
+          id="blue-head"
+          markerWidth="9"
+          markerHeight="9"
+          refX="7"
+          refY="4"
           orient="auto"
         >
-          <path d="M0,0 L0,6 L7,3 z" className="fill-teal" />
+          <path d="M0 0 L0 8 L8 4 z" fill="#23766f" />
         </marker>
         <marker
-          id="rust-arrow"
-          markerWidth="8"
-          markerHeight="8"
-          refX="6"
-          refY="3"
+          id="orange-head"
+          markerWidth="9"
+          markerHeight="9"
+          refX="7"
+          refY="4"
           orient="auto"
         >
-          <path d="M0,0 L0,6 L7,3 z" className="fill-rust" />
+          <path d="M0 0 L0 8 L8 4 z" fill="#b95736" />
         </marker>
       </defs>
 
-      <g className="stroke-ink/7">
-        {[130, 210, 290, 370, 450, 530].map((x) => (
-          <line key={`x-${x}`} x1={x} y1="48" x2={x} y2="320" />
+      <g stroke="#1f332d" strokeOpacity="0.1">
+        {[150, 230, 310, 390, 470, 550].map((x) => (
+          <line key={`x-${x}`} x1={x} y1="52" x2={x} y2="385" />
         ))}
-        {[80, 140, 200, 260, 320].map((y) => (
-          <line key={`y-${y}`} x1="92" y1={y} x2="550" y2={y} />
+        {[85, 145, 205, 265, 325, 385].map((y) => (
+          <line key={`y-${y}`} x1="90" y1={y} x2="585" y2={y} />
         ))}
       </g>
+
       <line
-        x1="92"
-        y1="320"
-        x2="550"
-        y2="320"
-        className="stroke-ink/25"
-        strokeWidth="1.5"
+        x1="90"
+        y1="385"
+        x2="600"
+        y2="385"
+        stroke="#1f332d"
+        strokeOpacity="0.35"
       />
       <line
-        x1="92"
-        y1="320"
-        x2="92"
-        y2="48"
-        className="stroke-ink/25"
-        strokeWidth="1.5"
+        x1="90"
+        y1="385"
+        x2="90"
+        y2="42"
+        stroke="#1f332d"
+        strokeOpacity="0.35"
       />
       <text
-        x="548"
-        y="350"
+        x="600"
+        y="420"
         textAnchor="end"
-        className="fill-ink/48 text-[12px]"
+        fill="#1f332d"
+        fillOpacity="0.55"
+        fontSize="14"
       >
-        one source of automation risk
+        profit shock
       </text>
-      <text x="108" y="63" className="fill-ink/48 text-[12px]">
-        another source of risk
+      <text x="105" y="36" fill="#1f332d" fillOpacity="0.55" fontSize="14">
+        jobs shock
       </text>
 
-      {directions === 0 && (
-        <g>
-          <circle
-            cx="320"
-            cy="185"
-            r="86"
-            className="fill-rust/5 stroke-rust/38"
-            strokeDasharray="7 8"
-            strokeWidth="2"
-          />
-          <text
-            x="320"
-            y="178"
-            textAnchor="middle"
-            className="fill-rust text-[15px] font-semibold"
-          >
-            No risky public claim
-          </text>
-          <text
-            x="320"
-            y="203"
-            textAnchor="middle"
-            className="fill-ink/52 text-[12px]"
-          >
-            neither risk is covered by a payoff
-          </text>
-        </g>
-      )}
+      <path
+        d="M112 365 L548 95"
+        stroke="#23766f"
+        strokeOpacity="0.13"
+        strokeWidth="18"
+        strokeLinecap="round"
+      />
+      <path
+        d="M112 365 L548 95"
+        stroke="#23766f"
+        strokeWidth="4"
+        strokeLinecap="round"
+        markerEnd="url(#blue-head)"
+      />
+      <text x="386" y="142" fill="#23766f" fontSize="15" fontWeight="700">
+        what the first asset pays for
+      </text>
 
-      {directions >= 1 && (
-        <g>
-          <path
-            d="M122 298 L510 72"
-            className="stroke-teal"
-            strokeWidth="11"
-            strokeLinecap="round"
-            opacity="0.11"
-          />
-          <path
-            d="M122 298 L510 72"
-            className="stroke-teal"
-            strokeWidth="3"
-            strokeLinecap="round"
-            markerEnd="url(#teal-arrow)"
-          />
-          <text x="358" y="111" className="fill-teal text-[13px] font-semibold">
-            risk this claim can cover
-          </text>
-        </g>
-      )}
+      <path
+        d="M337 225 L190 89"
+        stroke={secondAsset ? '#23766f' : '#b95736'}
+        strokeOpacity={secondAsset ? 0.13 : 0}
+        strokeWidth={secondAsset ? 18 : 0}
+        strokeLinecap="round"
+      />
+      <path
+        d="M337 225 L190 89"
+        stroke={secondAsset ? '#23766f' : '#b95736'}
+        strokeWidth="4"
+        strokeDasharray={secondAsset ? undefined : '9 8'}
+        markerEnd={secondAsset ? 'url(#blue-head)' : 'url(#orange-head)'}
+        className="transition-all duration-500"
+      />
+      <text
+        x="112"
+        y="70"
+        fill={secondAsset ? '#23766f' : '#b95736'}
+        fontSize="15"
+        fontWeight="700"
+      >
+        {secondAsset
+          ? 'what the second asset adds'
+          : 'what the first asset misses'}
+      </text>
 
-      {directions === 1 && (
-        <g>
-          <path
-            d="M320 185 L170 76"
-            className="stroke-rust"
-            strokeDasharray="8 7"
-            strokeWidth="3"
-            markerEnd="url(#rust-arrow)"
-          />
-          <text x="116" y="58" className="fill-rust text-[13px] font-semibold">
-            risk left uncovered
-          </text>
-          <circle
-            cx="320"
-            cy="185"
-            r="7"
-            className="fill-white stroke-ink/40"
-            strokeWidth="2"
-          />
-        </g>
-      )}
-
-      {directions === 2 && (
-        <g>
-          <path
-            d="M320 185 L170 76"
-            className="stroke-teal"
-            strokeWidth="11"
-            strokeLinecap="round"
-            opacity="0.11"
-          />
-          <path
-            d="M320 185 L170 76"
-            className="stroke-teal"
-            strokeWidth="3"
-            markerEnd="url(#teal-arrow)"
-          />
-          <text x="116" y="58" className="fill-teal text-[13px] font-semibold">
-            second claim covers this risk
-          </text>
-          <circle
-            cx="320"
-            cy="185"
-            r="7"
-            className="fill-white stroke-teal"
-            strokeWidth="2"
-          />
-        </g>
-      )}
+      <circle
+        cx="337"
+        cy="225"
+        r="8"
+        fill="#f7f3eb"
+        stroke="#1f332d"
+        strokeOpacity="0.45"
+        strokeWidth="2"
+      />
+      <circle
+        cx="190"
+        cy="89"
+        r="5"
+        fill={secondAsset ? '#23766f' : '#b95736'}
+      />
     </svg>
+  );
+}
+
+function TimingGraphic() {
+  return (
+    <figure className="rounded-[1.75rem] border border-ink/10 bg-white p-5 shadow-[0_18px_55px_rgba(28,43,38,0.07)] sm:p-8">
+      <figcaption className="text-sm font-semibold">
+        Why owning and taxing are not the same move
+      </figcaption>
+      <div className="mt-7 grid gap-4 lg:grid-cols-[0.75fr_32px_1fr_32px_1fr] lg:items-center">
+        <div className="rounded-2xl bg-ink p-5 text-white">
+          <p className="text-xs uppercase tracking-[0.16em] text-white/50">
+            Now
+          </p>
+          <p className="mt-2 font-semibold">Automation news arrives</p>
+        </div>
+        <ArrowRight
+          className="hidden size-5 text-ink/35 lg:block"
+          aria-hidden="true"
+        />
+        <div className="rounded-2xl bg-mist p-5">
+          <p className="text-xs font-bold uppercase tracking-[0.14em] text-teal">
+            Public ownership
+          </p>
+          <p className="mt-2 font-semibold">
+            An asset already owned can rise immediately
+          </p>
+        </div>
+        <ArrowRight
+          className="hidden size-5 text-ink/35 lg:block"
+          aria-hidden="true"
+        />
+        <div className="rounded-2xl bg-[#f8e9e3] p-5">
+          <p className="text-xs font-bold uppercase tracking-[0.14em] text-rust">
+            Capital tax
+          </p>
+          <p className="mt-2 font-semibold">
+            A tax changes investment, wages and revenue over time
+          </p>
+        </div>
+      </div>
+    </figure>
   );
 }
 
 export default function Home() {
   const [scenarioKey, setScenarioKey] = useState<ScenarioKey>('downside');
-  const [assetMenuKey, setAssetMenuKey] = useState<AssetMenuKey>('maintained');
-
+  const [secondAsset, setSecondAsset] = useState(false);
   const scenario = content.scenarios[scenarioKey];
-  const assetMenu = content.assetMenus[assetMenuKey];
-  const baseUrl = import.meta.env.BASE_URL;
 
   return (
     <main id="top" className="min-h-screen overflow-x-hidden bg-paper text-ink">
-      <header className="sticky top-0 z-50 border-b border-ink/10 bg-paper/95 backdrop-blur">
+      <header className="sticky top-0 z-50 border-b border-ink/10 bg-paper/92 backdrop-blur-md">
         <div className="mx-auto flex max-w-[1240px] items-center justify-between gap-5 px-5 py-4 sm:px-8">
           <a
             href="#top"
@@ -300,83 +415,65 @@ export default function Home() {
             TAI Public Finance
           </a>
           <nav
-            className="hidden items-center gap-6 text-sm text-ink/64 md:flex"
+            className="hidden items-center gap-6 text-sm text-ink/62 md:flex"
             aria-label="Main navigation"
           >
-            <a href="#question" className="hover:text-ink">
-              The question
+            <a href="#idea" className="hover:text-ink">
+              The idea
             </a>
-            <a href="#mechanism" className="hover:text-ink">
-              The mechanism
+            <a href="#assets" className="hover:text-ink">
+              Public assets
             </a>
-            <a href="#tools" className="hover:text-ink">
-              Policy tools
-            </a>
-            <a href="#evidence" className="hover:text-ink">
-              Evidence
+            <a href="#policy" className="hover:text-ink">
+              Policy choices
             </a>
           </nav>
           <a
-            href={content.implementationRepository}
-            className="rounded-md border border-ink/18 bg-white px-3 py-2 text-xs font-semibold hover:border-ink/35"
+            href="#read"
+            className="rounded-full bg-ink px-4 py-2 text-xs font-semibold text-white transition hover:bg-teal"
           >
-            View on GitHub
+            Read the research
           </a>
         </div>
       </header>
 
-      <section id="question" className="scroll-mt-24 border-b border-ink/10">
-        <div className="mx-auto grid max-w-[1240px] gap-12 px-5 py-16 sm:px-8 sm:py-24 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:py-32">
-          <div className="max-w-3xl">
-            <p className="text-sm font-semibold text-rust">
-              Public finance under automation risk
+      <section className="hero-grid border-b border-ink/10">
+        <div className="mx-auto grid max-w-[1240px] gap-12 px-5 py-16 sm:px-8 sm:py-24 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:py-28">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-rust">
+              Automation and the public balance sheet
             </p>
-            <h1 className="mt-5 font-display text-[clamp(3rem,6.8vw,6.4rem)] leading-[0.94] tracking-[-0.055em]">
-              When automation pays investors, who insures workers?
+            <h1 className="mt-6 max-w-4xl font-display text-[clamp(3.4rem,7.2vw,7rem)] leading-[0.9] tracking-[-0.06em]">
+              Automation affects capitalists and workers differently.
             </h1>
-            <p className="mt-7 max-w-2xl text-lg leading-8 text-ink/70 sm:text-xl sm:leading-9">
-              Workers may be unable to trade the claims that rise in value when
-              automation changes production. Investors can. This project asks
-              whether a government balance sheet can partly fill that missing
-              market—and where it cannot.
+            <p className="mt-7 max-w-2xl text-lg leading-8 text-ink/68 sm:text-xl sm:leading-9">
+              When technology raises profits faster than wages, ownership
+              decides who gets the upside. This research asks whether government
+              can use its own assets to give workers a larger stake.
             </p>
             <a
-              href="#mechanism"
-              className="mt-8 inline-flex items-center gap-2 border-b border-ink pb-1 text-sm font-semibold"
+              href="#idea"
+              className="mt-9 inline-flex items-center gap-2 border-b border-ink pb-1 text-sm font-semibold"
             >
-              See the basic mechanism{' '}
+              See how it works{' '}
               <ArrowRight className="size-4" aria-hidden="true" />
             </a>
           </div>
-
-          <aside className="border-l-2 border-teal pl-6 sm:pl-8">
-            <p className="font-display text-2xl leading-snug tracking-[-0.025em] sm:text-3xl">
-              The question is not simply whether workers gain or lose.
-            </p>
-            <p className="mt-4 text-base leading-7 text-ink/64">
-              A public claim can matter whenever workers’ resources move
-              differently from the resources of the investors who price that
-              claim.
-            </p>
-            <p className="mt-6 text-sm leading-6 text-ink/50">
-              This is an early research website. It reports no calibrated policy
-              or welfare numbers.
-            </p>
-          </aside>
+          <HeroGraphic />
         </div>
       </section>
 
-      <section id="mechanism" className="scroll-mt-24 bg-white">
+      <section id="idea" className="scroll-mt-24 bg-white">
         <div className="mx-auto max-w-[1240px] px-5 py-20 sm:px-8 lg:py-28">
           <SectionIntro
-            label="The basic problem"
-            title="The same shock can matter differently to workers and investors."
-            copy="Consider a state in which a traded claim does well. Investors who hold it may gain a great deal. Workers may lose, or they may gain by less. In either case, a pound delivered in that state can be worth more to a government acting for workers than to the investor who prices the claim."
+            label="Start here"
+            title="A boom for capital can still leave workers behind."
+            copy="The economy can grow while the gains land unevenly. Move between three versions of the same automation shock to see the difference."
           />
 
           <fieldset
-            className="mt-12 flex flex-wrap gap-2"
-            aria-label="Choose an illustrative automation state"
+            className="mt-10 flex flex-wrap gap-2"
+            aria-label="Choose an automation shock"
           >
             {scenarioOrder.map((key) => (
               <button
@@ -384,10 +481,10 @@ export default function Home() {
                 type="button"
                 onClick={() => setScenarioKey(key)}
                 aria-pressed={scenarioKey === key}
-                className={`rounded-md border px-4 py-2.5 text-sm font-semibold transition ${
+                className={`rounded-full border px-4 py-2.5 text-sm font-semibold transition ${
                   scenarioKey === key
                     ? 'border-ink bg-ink text-white'
-                    : 'border-ink/15 bg-paper text-ink/68 hover:border-ink/35'
+                    : 'border-ink/15 bg-paper text-ink/65 hover:border-ink/35'
                 }`}
               >
                 {content.scenarios[key].shortLabel}
@@ -395,332 +492,218 @@ export default function Home() {
             ))}
           </fieldset>
 
-          <div className="mt-6 grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
-            <ValuationChart scenarioKey={scenarioKey} />
-            <div className="pt-2">
-              <p className="text-sm font-semibold text-teal">
+          <div className="mt-6 grid gap-9 lg:grid-cols-[1.08fr_0.92fr] lg:items-start">
+            <DistributionChart scenarioKey={scenarioKey} />
+            <div className="pt-3">
+              <p className="text-xs font-bold uppercase tracking-[0.16em] text-teal">
                 {scenario.label}
               </p>
-              <h3 className="mt-3 font-display text-3xl leading-tight tracking-[-0.035em]">
+              <h3 className="mt-4 font-display text-4xl leading-[1.05] tracking-[-0.04em]">
                 {scenario.title}
               </h3>
-              <p className="mt-4 text-base leading-7 text-ink/66">
+              <p className="mt-5 text-base leading-7 text-ink/66">
                 {scenario.explanation}
               </p>
-              <div className="mt-7 border-l border-rust/40 pl-5">
-                <p className="font-semibold">Why a public portfolio may help</p>
-                <p className="mt-2 text-sm leading-6 text-ink/60">
-                  The useful claim is the one that pays in states where
-                  worker-facing public resources are relatively valuable—not
-                  simply the claim with the highest return.
+
+              <div className="mt-9 rounded-2xl bg-paper p-6 sm:p-7">
+                <p className="text-xs font-bold uppercase tracking-[0.16em] text-rust">
+                  The whole idea in one ratio
                 </p>
-              </div>
-              <details className="mt-7 border-t border-ink/12 pt-5">
-                <summary className="cursor-pointer text-sm font-semibold">
-                  For readers who want the paper’s shorthand
-                </summary>
-                <div className="mt-4 grid gap-4 sm:grid-cols-[auto_1fr] sm:items-start">
-                  <p className="font-mono text-lg">
-                    Θ = m<sub>G</sub> / m<sub>I</sub>
+                <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-3">
+                  <p className="font-display text-5xl tracking-[-0.04em]">
+                    Θ ={' '}
+                    <span className="inline-flex flex-col align-middle text-center text-[0.55em] leading-none">
+                      <span className="border-b border-ink px-2 pb-1">
+                        m<sub>G</sub>
+                      </span>
+                      <span className="px-2 pt-1">
+                        m<sub>I</sub>
+                      </span>
+                    </span>
                   </p>
-                  <p className="text-sm leading-6 text-ink/60">
-                    This ratio compares the value of an extra public pound for
-                    worker welfare with its value in financial markets. When it
-                    rises in a state where the claim pays, the claim has
-                    insurance value for the public sector. It is a model object,
-                    not an estimated statistic or a policy rule.
+                  <p className="max-w-sm text-sm leading-6 text-ink/62">
+                    Θ is high when an extra £1 in the public budget matters more
+                    to workers than the same £1 matters to the investors pricing
+                    the asset.
                   </p>
                 </div>
-              </details>
+                <div className="mt-6 grid gap-3 border-t border-ink/10 pt-5 sm:grid-cols-2">
+                  <p className="text-sm leading-6 text-ink/60">
+                    <strong className="text-ink">
+                      m<sub>G</sub>
+                    </strong>{' '}
+                    is what £1 is worth to workers through the public budget.
+                  </p>
+                  <p className="text-sm leading-6 text-ink/60">
+                    <strong className="text-ink">
+                      m<sub>I</sub>
+                    </strong>{' '}
+                    is what £1 is worth to the investors setting the market
+                    price.
+                  </p>
+                </div>
+                <p className="mt-5 font-semibold leading-7">
+                  The useful public asset is the one that pays when Θ is high.
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="tools" className="scroll-mt-24 border-y border-ink/10">
+      <section id="assets" className="scroll-mt-24 border-y border-ink/10">
         <div className="mx-auto max-w-[1240px] px-5 py-20 sm:px-8 lg:py-28">
           <SectionIntro
-            label="Policy tools"
-            title="Different tools solve different problems."
-            copy="Public saving moves resources across dates. A risky claim moves resources across states of the world, but only where it pays. Capital taxation shares domestic capital income while also changing investment, future wages, and the tax base. The tools can overlap; they are not interchangeable."
+            label="What matters"
+            title="The asset has to rise at the right moment."
+            copy="Calling something an automation asset tells us very little. The important question is whether it pays when workers are missing income."
+          />
+          <div className="mt-12">
+            <StatePayoffGraphic />
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white">
+        <div className="mx-auto grid max-w-[1240px] gap-12 px-5 py-20 sm:px-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-center lg:py-28">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-rust">
+              One asset is not every asset
+            </p>
+            <h2 className="mt-4 font-display text-[clamp(2.4rem,4.8vw,4.6rem)] leading-[0.98] tracking-[-0.045em]">
+              Buying more of the same asset only gets you more of the same
+              payoff.
+            </h2>
+            <p className="mt-6 text-lg leading-8 text-ink/68">
+              The first asset follows the green line. If another part of the
+              automation shock sits off that line, increasing the position does
+              not reach it. A second asset needs to pay differently.
+            </p>
+            <fieldset
+              className="mt-8 inline-flex rounded-full border border-ink/12 bg-paper p-1"
+              aria-label="Choose the public asset menu"
+            >
+              <button
+                type="button"
+                onClick={() => setSecondAsset(false)}
+                aria-pressed={!secondAsset}
+                className={`rounded-full px-4 py-2 text-sm font-semibold transition ${!secondAsset ? 'bg-ink text-white' : 'text-ink/55'}`}
+              >
+                One asset
+              </button>
+              <button
+                type="button"
+                onClick={() => setSecondAsset(true)}
+                aria-pressed={secondAsset}
+                className={`rounded-full px-4 py-2 text-sm font-semibold transition ${secondAsset ? 'bg-ink text-white' : 'text-ink/55'}`}
+              >
+                Two different assets
+              </button>
+            </fieldset>
+          </div>
+          <figure className="rounded-[1.75rem] border border-ink/10 bg-paper p-4 shadow-[0_18px_55px_rgba(28,43,38,0.07)] sm:p-6">
+            <PayoffSpanGraphic secondAsset={secondAsset} />
+            <figcaption className="border-t border-ink/10 px-2 pt-4 text-sm leading-6 text-ink/58">
+              {secondAsset
+                ? 'A second asset adds something only if its payoff moves in a genuinely different direction.'
+                : 'The orange arrow is the part of the shock that the first asset misses.'}
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="policy" className="scroll-mt-24 border-y border-ink/10">
+        <div className="mx-auto max-w-[1240px] px-5 py-20 sm:px-8 lg:py-28">
+          <SectionIntro
+            label="The policy choice"
+            title="Saving, owning and taxing do different jobs."
+            copy="They can all put money behind workers. They do it at different times and change different parts of the economy."
           />
 
-          <div className="mt-12 divide-y divide-ink/12 border-y border-ink/12">
+          <div className="mt-12 grid gap-4 md:grid-cols-3">
             {[
               {
                 icon: PiggyBank,
-                name: 'Borrowing and saving',
-                job: 'Move resources between today and tomorrow.',
-                limit:
-                  'A safe position does not insure one same-date shock rather than another.',
+                name: 'Save',
+                copy: 'Put money aside now so government has more to spend later.',
               },
               {
                 icon: LineChart,
-                name: 'A risky public claim',
-                job: 'Move resources toward the states in which the claim pays.',
-                limit:
-                  'It cannot reach a risk that does not affect its payoff.',
+                name: 'Own',
+                copy: 'Hold an asset that rises when workers are getting less of the gains.',
               },
               {
                 icon: Landmark,
-                name: 'Capital taxation',
-                job: 'Share domestic capital income between private investors and the public budget.',
-                limit:
-                  'Changing the tax can also change investment, wages, and the future tax base.',
+                name: 'Tax',
+                copy: 'Take a share of capital income, while changing the reward to investment.',
               },
-            ].map(({ icon: Icon, name, job, limit }) => (
+            ].map(({ icon: Icon, name, copy }) => (
               <article
                 key={name}
-                className="grid gap-5 py-7 sm:grid-cols-[48px_0.8fr_1.1fr] sm:items-start sm:gap-8"
+                className="rounded-2xl border border-ink/10 bg-white p-6 sm:p-7"
               >
-                <span className="grid size-11 place-items-center rounded-md bg-mist text-teal">
+                <span className="grid size-11 place-items-center rounded-full bg-mist text-teal">
                   <Icon className="size-5" aria-hidden="true" />
                 </span>
-                <div>
-                  <h3 className="text-base font-semibold">{name}</h3>
-                  <p className="mt-2 text-sm leading-6 text-ink/62">{job}</p>
-                </div>
-                <p className="text-sm leading-6 text-ink/54">
-                  <span className="font-semibold text-ink/68">Its limit: </span>
-                  {limit}
-                </p>
+                <h3 className="mt-8 font-display text-3xl tracking-[-0.035em]">
+                  {name}
+                </h3>
+                <p className="mt-3 text-sm leading-6 text-ink/60">{copy}</p>
               </article>
             ))}
           </div>
 
-          <div className="mt-12 grid gap-8 border-l-2 border-rust bg-white p-6 sm:p-8 lg:grid-cols-[0.85fr_1.15fr]">
-            <h3 className="font-display text-3xl leading-tight tracking-[-0.035em]">
-              Every menu starts from the same economy.
+          <div className="mt-10">
+            <TimingGraphic />
+          </div>
+
+          <div className="mt-10 grid gap-5 rounded-[1.75rem] bg-ink p-7 text-white sm:p-9 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
+            <h3 className="font-display text-3xl leading-tight tracking-[-0.035em] sm:text-4xl">
+              A fair comparison starts in the same place.
             </h3>
-            <div>
-              <p className="text-base leading-7 text-ink/66">
-                We hold today’s economy, public balance sheet, tax rate, and
-                existing commitments fixed. Then we change one policy tool.
-                Otherwise, an apparent gain could simply reflect a better
-                starting point rather than the instrument itself.
-              </p>
-              <details className="mt-5 border-t border-ink/10 pt-4">
-                <summary className="cursor-pointer text-sm font-semibold">
-                  How the paper records that starting point
-                </summary>
-                <p className="mt-3 text-sm leading-6 text-ink/58">
-                  The common starting point is written (S<sub>0</sub>, M
-                  <sub>0</sub>): current physical and financial conditions,
-                  together with promises and institutional commitments already
-                  in force.
-                </p>
-              </details>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="coverage" className="scroll-mt-24 bg-white">
-        <div className="mx-auto max-w-[1240px] px-5 py-20 sm:px-8 lg:py-28">
-          <SectionIntro
-            label="What the claim can cover"
-            title="A claim only covers the risks built into its payoff."
-            copy="The model has two sources of uncertainty. One risky claim can respond to one combination of them. A second, independent claim can cover the other combination too—but that only expands what the public balance sheet can hedge."
-          />
-
-          <div className="mt-12 grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
-            <figure className="rounded-xl border border-ink/12 bg-paper p-4 sm:p-6">
-              <div className="flex flex-wrap items-center justify-between gap-4 border-b border-ink/10 pb-4">
-                <figcaption className="font-semibold">
-                  Which modeled risks are covered?
-                </figcaption>
-                <fieldset
-                  className="flex flex-wrap gap-2"
-                  aria-label="Choose the number of public risky claims"
-                >
-                  {assetOrder.map((key) => (
-                    <button
-                      key={key}
-                      type="button"
-                      onClick={() => setAssetMenuKey(key)}
-                      aria-pressed={assetMenuKey === key}
-                      className={`rounded-md border px-3 py-2 text-xs font-semibold transition ${
-                        assetMenuKey === key
-                          ? 'border-ink bg-white text-ink'
-                          : 'border-transparent text-ink/52 hover:text-ink'
-                      }`}
-                    >
-                      {content.assetMenus[key].shortLabel}
-                    </button>
-                  ))}
-                </fieldset>
-              </div>
-              <SpanDiagram directions={assetMenu.directions} />
-              <p className="border-t border-ink/10 pt-4 text-xs leading-5 text-ink/48">
-                Conceptual illustration of the local two-risk model; not a
-                measurement of real-world hedge coverage.
-              </p>
-            </figure>
-
-            <div className="pt-2">
-              <p className="text-sm font-semibold text-teal">
-                {assetMenu.label}
-              </p>
-              <p className="mt-4 text-base leading-7 text-ink/66">
-                {assetMenu.role}
-              </p>
-              <div className="mt-8 space-y-5">
-                <div>
-                  <p className="font-semibold">
-                    Risk the public claim can reach
-                  </p>
-                  <p className="mt-2 text-sm leading-6 text-ink/58">
-                    {assetMenu.marketed}
-                  </p>
-                </div>
-                <div>
-                  <p className="font-semibold">Risk the claim misses</p>
-                  <p className="mt-2 text-sm leading-6 text-ink/58">
-                    {assetMenu.residual}
-                  </p>
-                </div>
-              </div>
-              <div className="mt-8 border-t border-ink/12 pt-6">
-                <p className="text-sm leading-6 text-ink/58">
-                  Even two public claims do not create extra resources, give
-                  workers private trading accounts, remove financing limits, or
-                  make the economy fully insured.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="evidence" className="scroll-mt-24 border-y border-ink/10">
-        <div className="mx-auto max-w-[1240px] px-5 py-20 sm:px-8 lg:py-28">
-          <SectionIntro
-            label="Evidence and limits"
-            title="The diagrams show what must be measured—not what has already been proved in the data."
-            copy="The empirical work begins by separating worker resources, government cash flows, and balance-sheet values. Only then can it ask whether an automation exposure caused those objects to move or whether a proposed public claim would have provided a useful hedge."
-          />
-
-          <div className="mt-12 grid gap-8 lg:grid-cols-2">
-            <figure className="overflow-hidden rounded-xl border border-ink/12 bg-white">
-              <img
-                src={`${baseUrl}figures/measurement-accounting-before-causality.svg`}
-                alt="Diagram separating worker resources, tax bases, policy flows, Treasury cash and balance-sheet values before asking a causal question."
-                className="block h-auto w-full"
-              />
-              <figcaption className="border-t border-ink/10 p-5 text-sm leading-6 text-ink/60">
-                <span className="font-semibold text-ink">
-                  What has to be measured.
-                </span>{' '}
-                Worker resources, tax receipts, spending and asset revaluations
-                are different objects. The illustration is synthetic; it is not
-                an empirical result.
-              </figcaption>
-            </figure>
-            <figure className="overflow-hidden rounded-xl border border-ink/12 bg-white">
-              <img
-                src={`${baseUrl}figures/structural-model-counterfactual.svg`}
-                alt="Diagram showing how empirical evidence and economic mechanisms combine in a model to study a policy outside the observed range."
-                className="block h-auto w-full"
-              />
-              <figcaption className="border-t border-ink/10 p-5 text-sm leading-6 text-ink/60">
-                <span className="font-semibold text-ink">
-                  Why a model is still needed.
-                </span>{' '}
-                Evidence disciplines the observed region; assumptions determine
-                how that evidence is carried into a new policy regime. This is a
-                methodological illustration, not a policy estimate.
-              </figcaption>
-            </figure>
-          </div>
-
-          <div className="mt-16 grid gap-10 lg:grid-cols-[0.72fr_1.28fr]">
-            <div>
-              <h3 className="font-display text-3xl leading-tight tracking-[-0.035em]">
-                What this site can say now
-              </h3>
-              <p className="mt-4 text-sm leading-6 text-ink/58">
-                The theoretical mechanism is the starting point. Its
-                quantitative importance, the best mix of instruments, and the
-                empirical size of worker exposure remain open.
-              </p>
-            </div>
-            <div className="divide-y divide-ink/12 border-y border-ink/12">
-              {content.evidenceItems.map((item, index) => (
-                <article
-                  key={item.name}
-                  className="grid gap-3 py-6 sm:grid-cols-[0.72fr_1.28fr] sm:gap-8"
-                >
-                  <div>
-                    <p className="font-semibold">{item.name}</p>
-                    <p className="mt-1 text-xs font-semibold text-rust">
-                      {evidenceLabels[index]}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-sm leading-6 text-ink/64">
-                      {item.publicWording}
-                    </p>
-                    <p className="mt-3 text-xs leading-5 text-ink/46">
-                      {item.qualification}
-                    </p>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="read" className="bg-white">
-        <div className="mx-auto grid max-w-[1240px] gap-10 px-5 py-20 sm:px-8 lg:grid-cols-[0.85fr_1.15fr] lg:py-24">
-          <div>
-            <p className="text-sm font-semibold text-rust">
-              Read and reproduce
+            <p className="text-base leading-7 text-white/66">
+              Same economy. Same public debt. Same tax rate. Then change one
+              policy and see what it actually does.
             </p>
-            <h2 className="mt-3 font-display text-4xl tracking-[-0.04em]">
-              A public trail that grows with the paper.
+          </div>
+        </div>
+      </section>
+
+      <section id="read" className="scroll-mt-24 bg-white">
+        <div className="mx-auto grid max-w-[1240px] gap-10 px-5 py-20 sm:px-8 lg:grid-cols-[0.82fr_1.18fr] lg:py-24">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-rust">
+              Go deeper
+            </p>
+            <h2 className="mt-4 font-display text-5xl leading-none tracking-[-0.045em]">
+              Read the research.
             </h2>
           </div>
-          <div className="grid gap-4 sm:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-2">
             <a
               href="https://github.com/Nathan-Barnard/tai-public-finance-home/blob/main/notebooks/00_start_here.ipynb"
-              className="group border border-ink/14 bg-paper p-5 hover:border-teal/60"
+              className="group rounded-2xl border border-ink/12 bg-paper p-6 transition hover:-translate-y-1 hover:border-teal/55"
             >
               <BookOpen className="size-5 text-teal" aria-hidden="true" />
-              <p className="mt-7 font-semibold">Guided notebooks</p>
-              <p className="mt-2 text-sm leading-6 text-ink/54">
-                Follow the full model and computational route from the economic
-                question onward.
+              <p className="mt-10 font-semibold">Guided notebooks</p>
+              <p className="mt-2 text-sm leading-6 text-ink/55">
+                Work through the economics and the model step by step.
               </p>
-              <span className="mt-5 inline-flex items-center gap-2 text-xs font-semibold text-teal">
+              <span className="mt-6 inline-flex items-center gap-2 text-xs font-semibold text-teal">
                 Start reading <ArrowRight className="size-3.5" />
               </span>
             </a>
             <a
               href={content.implementationRepository}
-              className="group border border-ink/14 bg-paper p-5 hover:border-teal/60"
+              className="group rounded-2xl border border-ink/12 bg-paper p-6 transition hover:-translate-y-1 hover:border-teal/55"
             >
-              <BarChart3 className="size-5 text-teal" aria-hidden="true" />
-              <p className="mt-7 font-semibold">Code and site source</p>
-              <p className="mt-2 text-sm leading-6 text-ink/54">
-                Browse the public GitHub repository and follow each release.
+              <LineChart className="size-5 text-teal" aria-hidden="true" />
+              <p className="mt-10 font-semibold">Website and code</p>
+              <p className="mt-2 text-sm leading-6 text-ink/55">
+                Open the public repository behind this project.
               </p>
-              <span className="mt-5 inline-flex items-center gap-2 text-xs font-semibold text-teal">
+              <span className="mt-6 inline-flex items-center gap-2 text-xs font-semibold text-teal">
                 Open GitHub <ArrowRight className="size-3.5" />
-              </span>
-            </a>
-            <a
-              href={`${baseUrl}content/v0.1.json`}
-              className="group border border-ink/14 bg-paper p-5 hover:border-teal/60"
-            >
-              <ShieldCheck className="size-5 text-teal" aria-hidden="true" />
-              <p className="mt-7 font-semibold">Frozen content record</p>
-              <p className="mt-2 text-sm leading-6 text-ink/54">
-                Inspect the versioned wording, qualifications and research links
-                behind this release.
-              </p>
-              <span className="mt-5 inline-flex items-center gap-2 text-xs font-semibold text-teal">
-                View the record <ArrowRight className="size-3.5" />
               </span>
             </a>
           </div>
@@ -728,11 +711,9 @@ export default function Home() {
       </section>
 
       <footer className="border-t border-ink/10 bg-paper">
-        <div className="mx-auto flex max-w-[1240px] flex-col gap-3 px-5 py-8 text-xs text-ink/48 sm:px-8 md:flex-row md:items-center md:justify-between">
-          <p>TAI Public Finance · public research website</p>
-          <p>
-            Content {content.version} · reviewed {content.reviewDate}
-          </p>
+        <div className="mx-auto flex max-w-[1240px] flex-col gap-2 px-5 py-8 text-xs text-ink/48 sm:px-8 md:flex-row md:items-center md:justify-between">
+          <p>TAI Public Finance</p>
+          <p>Research by Nathan Barnard</p>
         </div>
       </footer>
     </main>
