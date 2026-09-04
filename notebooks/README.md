@@ -9,6 +9,10 @@ needs answered, not by source repository or the date the code was written.
 a reader question, not a claim or a filename that must be filled regardless of evidence.
 Change the sequence when the paper's settled argument or computational readiness changes.
 
+An `available` notebook may be analytical, illustrative, exploratory, or diagnostic.
+Its visible evidence label determines what a reader may infer. Availability never
+promotes an upstream computation.
+
 ## Required narrative structure
 
 Use [`TEMPLATE.ipynb`](TEMPLATE.ipynb) as the starting point. A published notebook should
@@ -46,6 +50,9 @@ be read. Do not use Markdown merely to restate the code line by line.
 Run `python3 scripts/check_notebooks.py` from the repository root. It validates every
 notebook and converts it to HTML in memory, so malformed Markdown or unsupported notebook
 structure is caught before publication.
+
+Run `python3 scripts/check_notebooks.py --execute` for the full clean-
+execution check used in continuous integration.
 
 ## Provenance metadata
 

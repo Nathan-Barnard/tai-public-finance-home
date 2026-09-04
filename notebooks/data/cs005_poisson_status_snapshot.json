@@ -1,0 +1,52 @@
+{
+  "candidate_atlas": {
+    "candidate_count": 4,
+    "fully_admissible_count": 0,
+    "matched_inherited_state_count": 0,
+    "pre_w5_admissible_count": 1,
+    "strict_viability_label_counts": {
+      "certified_infeasible_on_declared_domain": 1,
+      "certified_viable": 1,
+      "frontier_unresolved": 2
+    }
+  },
+  "disposition": "quarantine_affected",
+  "missing_gates": [
+    "full root coverage",
+    "W2 payoff-rank diagnostics",
+    "W3 tax-span cone",
+    "W4 fixed-mark diagnostic",
+    "closed W5 fiscal frontier",
+    "date-zero inherited-state solution",
+    "bound and fingerprinted CS005 specification"
+  ],
+  "pm08_tail_certificate_pass": true,
+  "pm08_tail_tolerance": 1e-08,
+  "result_use_status": "exploratory_diagnostic",
+  "schema_version": 1,
+  "scope": "Reduced-coverage marked-Poisson candidate diagnostics. Candidate counts are shown only to explain why no quantitative policy result is reported.",
+  "source": {
+    "artifacts": {
+      "pm08_report": {
+        "path": "outputs/cs005-pm08-tail-certificate/report.json",
+        "sha256": "95bb8de362114521b3b873c20ac8e5307fbdd05d18365b1c193e55144353d034"
+      },
+      "run_record": {
+        "path": "runs/RUN-20260902T220418Z-CS005-5a264b83-01.yaml",
+        "sha256": "40c717b2e39ca79958ea2d40f594e151f8494c652596489d2abd36079347f0f0"
+      },
+      "w5_report": {
+        "path": "outputs/cs005-w5-strict-viability/report.json",
+        "sha256": "bcccd8046cd30c6801a4d6ad0055cb3f48c7853ed57bcc7f24f916acece74980"
+      }
+    },
+    "public_commit": "74c736f8753e65f444eb30443a16adbb62f9c35c",
+    "repository": "https://github.com/Nathan-Barnard/tai-public-finance-poisson",
+    "run_id": "RUN-20260902T220418Z-CS005-5a264b83-01",
+    "run_implementation_commit": "5a264b836ecdfd8e22c868b38680ec8435545fc4",
+    "specification": {
+      "id": "CS005",
+      "status": "draft"
+    }
+  }
+}

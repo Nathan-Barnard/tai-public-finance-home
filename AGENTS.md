@@ -73,6 +73,12 @@ Run the fast structural and render check with:
 python3 scripts/check_notebooks.py
 ```
 
+Run the full clean-execution and render check with:
+
+```bash
+python3 scripts/check_notebooks.py --execute
+```
+
 Preview notebooks locally with:
 
 ```bash
@@ -81,9 +87,10 @@ jupyter lab
 
 The structural check establishes valid notebook JSON, required narrative placement,
 absence of stored execution errors, agreement with the manifest, and successful HTML
-conversion. It does not establish that model code is correct or that a numerical result
-is fit for publication. A result-bearing notebook also needs clean execution from the
-pinned environment and agreement with its frozen upstream evidence.
+conversion. The full check also establishes that every notebook executes cleanly from
+the repository root. Neither check establishes that upstream model code is correct or
+that a numerical result is fit for publication; result use must still agree with its
+frozen upstream evidence and review status.
 
 ## Worktrees and shared resources
 
@@ -94,12 +101,11 @@ when more than one worktree is active.
 
 ## Worktree readiness
 
-The repository is self-contained for its present scaffold. A fresh worktree needs only
-tracked files plus the dependency-install command above. No ignored configuration,
-database, container, secret, or `.worktreeinclude` is required. The fast and full check
-are currently the same command because the repository contains only the reader guide
-and notebook template; add notebook-specific execution commands when substantive
-notebooks arrive.
+The repository is self-contained. A fresh worktree needs only tracked files plus the
+dependency-install command above. No ignored configuration, database, container,
+secret, or `.worktreeinclude` is required. The committed compact exports are sufficient
+for clean notebook execution; refreshing them requires separate local checkouts of the
+three named upstream repositories.
 
 ## Completion
 

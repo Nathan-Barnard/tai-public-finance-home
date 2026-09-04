@@ -1,7 +1,7 @@
 # TAI Public Finance Home
 
 This repository is the guided computational companion to the TAI public-finance paper.
-It will bring the important models and results into a single sequence of Jupyter
+It brings the important models and results into a single sequence of Jupyter
 notebooks, explaining both **what the code is doing** and **why each computational step
 is economically necessary**.
 
@@ -10,11 +10,10 @@ A reader should be able to move from the economic question, through the model an
 numerical method, to the resulting figures and interpretation while retaining a precise
 route back to the underlying code and evidence.
 
-> **Current status:** the repository scaffold and reader guide are live. The upstream
-> implementation repositories do not currently contain Jupyter notebooks on their
-> `main` branches, so the substantive notebooks will be written here as thin,
-> reader-oriented interfaces to pinned code and frozen outputs. No quantitative result
-> has yet been imported into this repository.
+> **Current status:** the complete seven-notebook reader route is live. The notebooks
+> distinguish analytical results, illustrations, exploratory computations, diagnostic
+> evidence, and unresolved quantitative objects. Availability means the explanation is
+> complete and runnable; it does not promote draft computation to an accepted paper result.
 
 ## Start here
 
@@ -26,12 +25,12 @@ The intended reading sequence is:
 | Order | Notebook | Reader question | Current state |
 |---:|---|---|---|
 | 0 | Start here | What is the paper doing, and how should these notebooks be read? | Available |
-| 1 | Public intermediation problem | Why do workers and capital markets value automation states differently? | Planned |
-| 2 | Brownian valuation and payoff span | Which risks can a public claim hedge, and what remains unspanned? | Planned |
-| 3 | LQ dynamics and impulse responses | How is the transparent local model solved and checked? | Planned |
-| 4 | Nonlinear Ramsey problem | How does the richer dynamic problem change the analysis? | Planned |
-| 5 | Partial or full automation | How is uncertainty over the future production regime represented? | Planned |
-| 6 | Instruments and welfare | When do taxes, safe positions, and risky claims substitute for or complement one another? | Planned |
+| 1 | [Public intermediation problem](notebooks/01_public_intermediation_problem.ipynb) | Why do workers and capital markets value automation states differently? | Available — analytical/illustrative |
+| 2 | [Brownian valuation and payoff span](notebooks/02_brownian_valuation_and_payoff_span.ipynb) | Which risks can a public claim hedge, and what remains unspanned? | Available — analytical/illustrative |
+| 3 | [LQ dynamics and impulse responses](notebooks/03_lq_dynamics_and_impulse_responses.ipynb) | How is the transparent local model solved and checked? | Available — exploratory computation |
+| 4 | [Nonlinear Ramsey problem](notebooks/04_nonlinear_ramsey_problem.ipynb) | How does the richer dynamic problem change the analysis? | Available — formulation/diagnostic |
+| 5 | [Partial or full automation](notebooks/05_partial_or_full_automation.ipynb) | How is uncertainty over the future production regime represented? | Available — analytical/quarantined diagnostic |
+| 6 | [Instruments and welfare](notebooks/06_instruments_and_welfare.ipynb) | When do taxes, safe positions, and risky claims substitute for or complement one another? | Available — comparison contract |
 
 The sequence follows the paper's economic argument rather than the directory structure
 of the source code.
@@ -60,7 +59,9 @@ different model closures as though they were one interchangeable system.
 
 ```text
 notebooks/                  ordered reader notebooks and their manifest
+notebooks/data/             compact frozen exports with source hashes and status
 scripts/check_notebooks.py  notebook-structure and Markdown-render check
+scripts/refresh_frozen_exports.py  hash-checked export rebuild from upstream checkouts
 .github/workflows/          the same check on GitHub
 CURRENT_PROJECT_CONTEXT.md  maintained scope and next work
 ```
@@ -71,13 +72,13 @@ CURRENT_PROJECT_CONTEXT.md  maintained scope and next work
 python3 -m venv .venv
 source .venv/bin/activate
 python3 -m pip install -r requirements-dev.txt
-python3 scripts/check_notebooks.py
+python3 scripts/check_notebooks.py --execute
 jupyter lab
 ```
 
-The check converts every notebook to HTML in memory as well as validating its structure.
-This catches malformed notebook Markdown without creating generated files in the
-repository.
+The full check executes every notebook in memory and converts it to HTML as well as
+validating its structure. Run `python3 scripts/check_notebooks.py` for the faster
+structure-and-render-only check.
 
 ## Relationship to the interactive explorer
 

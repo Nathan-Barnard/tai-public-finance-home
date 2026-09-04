@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-09-04",
+  "result_use_status": "diagnostic_only",
+  "disposition": "quarantine_affected_for_numerical_welfare_magnitudes",
+  "scope": "Fixed-capital OU evaluation of pre-announced rules; not a Ramsey or optimal-policy comparison.",
+  "public_code": {
+    "integration_pull_request": "https://github.com/Nathan-Barnard/tai-public-finance-moll-ad-hoc/pull/13",
+    "integration_head": "bacea3119d948111541dabbc6745307f644a6774",
+    "block5_pull_request": "https://github.com/Nathan-Barnard/tai-public-finance-moll-ad-hoc/pull/12",
+    "block5_head": "7535641a499341592b489ca0f98d51fc43607606",
+    "entrypoint": "uv run python -m fixed_capital_ou.block5_lambda_sensitivity"
+  },
+  "evidence": {
+    "immutable_public_output_bundle": false,
+    "independent_block5_review": false,
+    "cs010_status": "draft",
+    "brownian_six_cell_numerical_bundle": false
+  },
+  "allowed_use": "Explain the fixed-rule comparison, accounting channels, and remaining publication gates.",
+  "excluded_use": "Do not report an optimal tax or portfolio, a Ramsey welfare result, or a cross-model welfare ranking."
+}

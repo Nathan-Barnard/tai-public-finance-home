@@ -1,0 +1,106 @@
+{
+  "baseline": {
+    "comprehensive_resources": 12.569150319683768,
+    "public_net_worth": 0.0,
+    "public_net_worth_to_fiscal_wealth": 0.0,
+    "transfer": 0.02020270731751947,
+    "wage_income": 0.23372815782095793,
+    "worker_consumption": 0.2539308651384774
+  },
+  "closed_loop_system": {
+    "coordinates": [
+      "z",
+      "x",
+      "k",
+      "tau_deviation"
+    ],
+    "matrix": [
+      [
+        -0.21072103131565253,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        -0.21072103131565253,
+        0.0,
+        0.0
+      ],
+      [
+        0.06020270731751946,
+        0.017968118183116614,
+        -0.03973378682956285,
+        -0.04040541463503893
+      ],
+      [
+        -0.1393052373230988,
+        -0.041577083145895935,
+        0.18420034848220615,
+        -0.1123217661284105
+      ]
+    ]
+  },
+  "diagnostics": {
+    "closed_loop_stability_margin": 0.076027776479,
+    "discounted_lyapunov_scaled_residual": 1.608e-17,
+    "riccati_scaled_residual": 1.159e-16,
+    "sylvester_scaled_residual": 6.322e-17
+  },
+  "portfolio_decomposition": {
+    "fiscal_hedge_component": -12.122660970247473,
+    "leading_constrained_position": 0.4464893494362947,
+    "marketed_fiscal_wealth_amount": 12.122660970247473,
+    "return_demand_component": 12.569150319683768
+  },
+  "public_reporting_correction": {
+    "automation_claim_no_claim_consumption_gap": 2.752428e-05,
+    "gap_horizon_years": [
+      0.0,
+      40.0
+    ],
+    "interpretation": "The public FINDINGS.md reports this gap as constant across all 161 horizons to 1e-11; raw IRF rows are intentionally not republished here."
+  },
+  "result_use_status": "exploratory_only",
+  "schema_version": 1,
+  "scope": "Illustrative local Brownian LQ anchor and leading-small-risk calculation; not a global Ramsey solution or a finite-risk welfare result.",
+  "source": {
+    "artifacts": {
+      "A_closed_loop.csv": {
+        "path": "outputs/cs001-lq-anchor-baseline-repair-01/matrices/A_closed_loop.csv",
+        "public_upstream": true,
+        "sha256": "02b57ade7014b7524bab130725adbb8c64a7509003daf05b1710b6475275f467"
+      },
+      "FINDINGS.md": {
+        "path": "outputs/cs001-lq-anchor-baseline-repair-01/FINDINGS.md",
+        "public_upstream": true,
+        "sha256": "4e4070307a5fe6adeb86a917914012a3631cfde09538ba4001b63e6e2b655054"
+      },
+      "portfolio_net_worth_grid.csv": {
+        "path": "outputs/cs001-lq-anchor-baseline-repair-01/portfolio_net_worth_grid.csv",
+        "public_upstream": true,
+        "sha256": "22088c317b596dfd3c64432c64838794dce05c4a7019e58c0fd89642a53b19bb"
+      },
+      "run_record": {
+        "path": "runs/RUN-20260901T194938Z-CS001-d876a61e-01.yaml",
+        "public_upstream": true,
+        "sha256": "beeaf9092b42e158e95570d59776c1cc38674d80632c0096745a6ed679a42851"
+      },
+      "summary.md": {
+        "path": "outputs/cs001-lq-anchor-baseline-repair-01/summary.md",
+        "public_upstream": true,
+        "sha256": "655ec87d028842b5d5072f4917745447404168afdac97df3cf6d65bd97de9b82"
+      }
+    },
+    "implementation_commit": "d876a61ef593737c2cfbd6f758192c0f390318ab",
+    "public_container_commit": "971cab12986bce99c23a291fd62a5cde66ffa01a",
+    "repository": "https://github.com/Nathan-Barnard/tai-public-finance",
+    "run_id": "RUN-20260901T194938Z-CS001-d876a61e-01",
+    "specification": {
+      "id": "CS001",
+      "status": "draft",
+      "version": "0.1"
+    },
+    "transformation": "Copied the tracked closed-loop matrix and the zero-public-net-worth row; transcribed named diagnostics and corrected interpretation values from the hash-verified public summary and findings files."
+  }
+}

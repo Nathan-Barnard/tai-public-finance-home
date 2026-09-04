@@ -9,6 +9,7 @@ import sys
 
 import nbformat
 from nbconvert import HTMLExporter
+from nbconvert.preprocessors import ExecutePreprocessor
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -54,7 +55,7 @@ def validate_manifest(manifest: dict) -> list[str]:
     return errors
 
 
-def validate_notebook(path: Path) -> list[str]:
+def validate_notebook(path: Path, execute: bool = False) -> list[str]:
     errors: list[str] = []
     relative = path.relative_to(ROOT)
 
@@ -95,6 +96,13 @@ def validate_notebook(path: Path) -> list[str]:
         if not tai_metadata.get(field):
             errors.append(f"{relative}: metadata.tai.{field} is required")
 
+    if execute:
+        try:
+            executor = ExecutePreprocessor(timeout=120, kernel_name="python3")
+            executor.preprocess(notebook, {"metadata": {"path": str(ROOT)}})
+        except Exception as exc:
+            errors.append(f"{relative}: clean execution failed: {exc}")
+
     try:
         html, _ = HTMLExporter().from_notebook_node(notebook)
         if "<h1" not in html:
@@ -106,6 +114,11 @@ def validate_notebook(path: Path) -> list[str]:
 
 
 def main() -> int:
+    execute = "--execute" in sys.argv[1:]
+    unknown = [argument for argument in sys.argv[1:] if argument != "--execute"]
+    if unknown:
+        print(f"ERROR: unknown arguments: {', '.join(unknown)}", file=sys.stderr)
+        return 2
     try:
         manifest = load_manifest()
     except Exception as exc:
@@ -117,7 +130,7 @@ def main() -> int:
     if not notebooks:
         errors.append("no notebooks found")
     for path in notebooks:
-        errors.extend(validate_notebook(path))
+        errors.extend(validate_notebook(path, execute=execute))
 
     if errors:
         print("Notebook checks failed:", file=sys.stderr)
@@ -125,7 +138,11 @@ def main() -> int:
             print(f"- {error}", file=sys.stderr)
         return 1
 
-    print(f"Checked {len(notebooks)} notebooks: valid structure and HTML rendering.")
+    execution_note = ", clean execution" if execute else ""
+    print(
+        f"Checked {len(notebooks)} notebooks: valid structure{execution_note} "
+        "and HTML rendering."
+    )
     return 0
 
 

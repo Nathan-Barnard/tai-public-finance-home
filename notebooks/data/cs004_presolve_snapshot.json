@@ -1,0 +1,76 @@
+{
+  "classification": {
+    "hard_failures": [],
+    "localized_warnings": [
+      "only 62.6% of the central reporting core maintains reference-floor slack >= eta_sol=0.01 -- expected given the configured central n-range extends well below the reference floor; see FINDINGS.md"
+    ],
+    "outcome": "pass_with_localized_warnings"
+  },
+  "design_summary": {
+    "buffer:factorial_grid": 243,
+    "buffer:seeded_interior": 1500,
+    "central:factorial_grid": 243,
+    "central:seeded_interior": 1000,
+    "total": 2986
+  },
+  "disposition": "diagnose_before_scaling",
+  "environment": {
+    "device": "cpu",
+    "numpy": "2.5.2",
+    "platform": "macOS-15.6.1-arm64-arm-64bit-Mach-O",
+    "precision": "float64",
+    "python": "3.13.5",
+    "scipy": "1.18.1"
+  },
+  "margin_violations": {
+    "beta_I_below_eta_beta": 0,
+    "beta_I_nonpositive": 0,
+    "specialisation_margin_nonpositive": 0
+  },
+  "nonfinite_point_count": 0,
+  "reference_floor": {
+    "caveat": "The broad training box is allowed to extend below the reference floor by design (CS004 v0.5). This reports how much of the CENTRAL reporting core maintains positive slack at each eta_sol -- it does not certify the box or reject it; only a reporting core that cannot maintain positive slack at all is a candidate for rejection, and that is not what is found here (see FINDINGS.md).",
+    "central_fraction_meeting": 0.6259050683829445,
+    "eta_sol": 0.01,
+    "formula": "n_ref(tau) = -0.12 * tau * (1 - tau)"
+  },
+  "result_use_status": "exploratory_only",
+  "sampled_minima": {
+    "buffer_beta_I_dense_max": 0.0017008338421993165,
+    "buffer_beta_I_dense_min": 0.0013505311723787492,
+    "buffer_specialisation_automation": 0.26051579722009965,
+    "buffer_specialisation_new_task": 0.31442009519487435,
+    "central_specialisation_automation": 0.42941222666248513,
+    "central_specialisation_new_task": 0.4887669364555499
+  },
+  "schema_version": 1,
+  "scope": "Pre-solve primitive and sampled-domain diagnostic for an illustrative five-state box; not a nonlinear HJB solution or policy result.",
+  "sign_violations": {
+    "automation_derivative_nonpositive": 0,
+    "output_automation_sign_wrong": 0,
+    "wage_automation_sign_wrong": 0
+  },
+  "source": {
+    "artifacts": {
+      "configuration": {
+        "path": "configs/cs004/broad_pde_feasibility_v1.json",
+        "sha256": "b060925f4327a1464dc12320aba0271d3411db1ae3d05e42406d5cc11a8296cd"
+      },
+      "summary.json": {
+        "path": "outputs/cs004-block1-primitive-domain-screen/summary.json",
+        "sha256": "6b2aab6ed22647aae20880cb0204e4c9a6d50a17498b8169aeabc0b4ace1b958"
+      }
+    },
+    "provenance_warning": "The run record names an older commit than the final frozen screen implementation, so the run is not accepted evidence.",
+    "public_container_commit": "b287168c8593a5110ca52eb8bc19890f76fbb85b",
+    "repository": "https://github.com/Nathan-Barnard/tai-public-finance-ramsey-pde",
+    "run_id": "RUN-20260901T204946Z-CS004-2713208-01",
+    "run_recorded_commit": "2713208",
+    "screen_implementation_commit": "8815c82e980b87a892bbb30860e9bb83acdf87ed",
+    "specification": {
+      "id": "CS004",
+      "status": "draft",
+      "version": "0.5"
+    }
+  }
+}
