@@ -2,9 +2,9 @@
 
 The public home of the research project *Automation Risk and the Public Balance
 Sheet*. The [website](https://nathan-barnard.github.io/tai-public-finance-home/)
-is a long-form visual argument about one idea: automation affects capitalists and
-workers differently, and public ownership only helps workers when the public asset
-pays in the futures where they are left behind. Seven guided Jupyter notebooks then
+is a long-form visual argument about one idea: automation pays the people who own
+it, and public ownership only helps workers when the public asset pays in the futures
+where they are left behind. Seven guided Jupyter notebooks then
 develop the models and computational route in depth.
 
 > **Status:** the website is a complete visual essay with an interactive lab, a

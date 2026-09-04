@@ -7,7 +7,7 @@ export const storySections: StorySection[] = [
   {
     slug: 'top',
     eyebrow: 'The public balance sheet and automation',
-    headline: 'Automation affects capitalists and workers differently.',
+    headline: 'Automation pays the people who own it.',
     body: [
       'When new technology raises profits and asset values, people who own capital share in the upside automatically. Workers who do not own those assets may not.',
       'The question is who owns the claims on the wealth automation creates.',
