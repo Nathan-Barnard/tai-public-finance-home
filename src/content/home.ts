@@ -3,7 +3,8 @@ import { routes } from '@/lib/paths';
 
 export const hero = {
   eyebrow: 'AI, growth, and distribution',
-  headline: 'How might AI change who gains from economic growth?',
+  headline:
+    'How might AI change who gains from economic growth, and how could we shape it?',
   body: 'AI may raise productivity, wages and profits in different proportions. This project uses historical evidence and economic models to examine how ownership, taxes and public investment can shape who benefits.',
   primary: { label: 'Explore possible futures', href: routes.explore },
   secondary: { label: 'See what history shows', href: '#history' },

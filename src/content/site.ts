@@ -4,7 +4,7 @@ import { routes } from '@/lib/paths';
 export const site = {
   name: 'AI, Growth, and Who Gains',
   description:
-    'How might AI change who gains from economic growth? A research explainer using historical evidence and economic models to examine ownership, taxes and public investment.',
+    'How might AI change who gains from economic growth, and how could we shape it? A research explainer using historical evidence and economic models to examine ownership, taxes and public investment.',
 };
 
 export const nav = [

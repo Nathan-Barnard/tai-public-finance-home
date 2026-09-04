@@ -34,7 +34,7 @@ const social = `<!doctype html><html><head><meta charset="utf-8"><style>${shared
 </style></head><body>
   <p class="name">AI, Growth, and Who Gains</p>
   <div class="rule"></div>
-  <h1>How might AI change who gains from economic growth?</h1>
+  <h1>How might AI change who gains from economic growth, and how could we shape it?</h1>
   <p class="sub">Historical evidence and economic models on ownership, taxes and public investment.</p>
   <div class="foot">
     <span class="tag"><span class="dot worker"></span>Worker outcomes</span>

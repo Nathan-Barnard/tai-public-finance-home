@@ -58,7 +58,7 @@
 /* Page heads and hero                                                 */
 /* ------------------------------------------------------------------ */
 .home-hero {
-  padding-block: clamp(1.5rem, 2.1vw, 2.15rem);
+  padding-block: clamp(1.4rem, 1.85vw, 2rem);
 }
 .home-hero__inner {
   display: grid;
