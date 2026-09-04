@@ -2,63 +2,44 @@
 
 **Updated:** 4 September 2026
 
-**State:** complete first public notebook sequence; public website added
+**State:** complete public website (visual essay, lab, library, dashboard) and the
+complete seven-notebook route
 
 ## Purpose
 
-TAI Public Finance Home is the reader-facing companion to the paper. Its public website
-introduces the question, mechanism, policy tools, and evidence boundary in ordinary
-language. The notebooks then turn the important models, solution approaches,
-diagnostics, and results into an ordered computational narrative. The repository remains
-separate from those that own production solver code.
+This repository is the reader-facing home of *Automation Risk and the Public Balance
+Sheet*. The website makes one argument impossible to miss: automation divides the
+gains; ownership determines who participates; government can act for people without
+claims; the public asset only works where it pays; one payoff reaches one direction;
+saving, ownership and taxation act on different margins; a transformed economy may
+need a broader public payoff menu. The notebooks then turn the models, solution
+approaches, diagnostics and results into an ordered computational narrative.
 
 ## Current state
 
-The repository has a static GitHub Pages website and a complete seven-notebook route,
-with an authoring template, a public manifest, compact provenance-bearing exports, and
-structural, execution, and HTML render checks. The website requires no account or
-sign-in. Its current diagrams are synthetic illustrations, not empirical estimates.
+The website was rebuilt on 4 September 2026 as four prerendered static routes under
+`/tai-public-finance-home/`: the visual essay, the Public Balance Sheet Lab, the
+research library and a dated research dashboard. All diagrams are computed SVG; the
+payoff diagrams use exact projection geometry. The site bundles its fonts, includes
+the paper and supplement PDFs under `public/paper/`, and carries no sign-in, server,
+database, tracking or custom domain.
 
-On 4 September 2026, the `main` branches of the five mapped implementation repositories
-contained no `.ipynb` files. The notebooks were therefore written here as thin public
-interfaces to pinned code, compact frozen exports, and explicit evidence-status records.
+Public copy is scanned on every build for banned language, internal research
+identifiers and numbered ornaments. The lab and matrix show only qualitative
+statements; the content model has room for validated figures cell by cell, and none
+are entered.
 
-The source work currently spans:
-
-- the Brownian, local-quadratic, small-risk, and earlier empirical code in
-  `Nathan-Barnard/tai-public-finance`;
-- the nonlinear five-state work in `Nathan-Barnard/tai-public-finance-ramsey-pde`;
-- the marked-Poisson work in `Nathan-Barnard/tai-public-finance-poisson`;
-- the small-open full-automation work in
-  `Nathan-Barnard/tai-public-finance-full-automation`; and
-- the fixed-capital state-dependent pricing work in
-  `Nathan-Barnard/tai-public-finance-moll-ad-hoc`.
-
-Several computational specifications remain draft or proposed, and not every external
-run is suitable for a public quantitative claim. The notebook sequence may explain a
-model or method before decision-grade results exist, but it must label such material as
-analytical, illustrative, diagnostic, or provisional.
-
-## Maintained notebook route and evidence boundary
-
-The route is recorded in [`notebooks/manifest.json`](notebooks/manifest.json). It begins
-with the public-intermediation question, develops the Brownian valuation and payoff-span
-logic, shows the local and nonlinear solution approaches, then turns to the Poisson
-partial-versus-full-automation case and the policy comparison.
-
-The route is now fully available. “Available” describes a complete runnable explanation,
-not an accepted quantitative claim. The public-intermediation and payoff-span notebooks
-are analytical/illustrative. The LQ notebook exposes a frozen exploratory local run. The
-nonlinear notebook stops at the implemented pre-solve diagnostic. The Poisson notebook
-contains an exact rank argument and quarantine-affected run-status evidence. The final
-notebook records the matched comparison required for welfare while withholding numerical
-rankings that lack an immutable, independently accepted evidence bundle.
+The notebook route is unchanged: analytical and illustrative for the intermediation and
+payoff-span notebooks; exploratory local computation for the local model; formulation
+and pre-solve diagnostic for the nonlinear problem; an exact rank result with withheld
+diagnostics for the two-successor case; and a comparison design without a numerical
+welfare ranking for the instruments notebook.
 
 ## Next concrete step
 
-As upstream work is promoted, update the existing notebook rather than adding a rival
-result track. The highest-value upgrades are: a fingerprinted and reviewed CS001 bundle;
-a corrected-provenance nonlinear evaluator/PDE stage; closed CP005 coverage and inherited-
-state matching; and an immutable, independently reviewed fixed-policy or Brownian
-six-cell welfare bundle. Every upgrade must retain the current comparison contract and
-replace the evidence-status label in the same commit as its figures and data.
+As upstream work is promoted, update the existing notebook and the dashboard entry
+rather than adding a rival result track. The highest-value upgrades remain a reviewed
+local-model bundle, a corrected-provenance nonlinear stage, closed coverage of the
+two-successor case, and an immutable, independently reviewed six-cell comparison
+bundle. Every upgrade must replace the evidence label in `src/content/dashboard.ts` in
+the same commit as its figures and data.

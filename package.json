@@ -1,22 +1,24 @@
 {
   "name": "tai-public-finance-home",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "engines": {
-    "node": ">=22.13.0"
+    "node": ">=22.18.0"
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && node scripts/prerender.mjs",
     "preview": "vite preview",
-    "check": "npm run lint && npm run typecheck && npm run build",
+    "check": "npm run lint && npm run typecheck && npm run test && npm run build && npm run check:copy",
+    "check:copy": "node scripts/check-copy.mjs",
     "lint": "oxlint",
-    "format": "oxfmt app src public/content index.html vite.config.ts tsconfig.json package.json .oxlintrc.json .oxfmtrc.json .github/workflows/deploy-pages.yml",
-    "format:check": "oxfmt --check app src public/content index.html vite.config.ts tsconfig.json package.json .oxlintrc.json .oxfmtrc.json .github/workflows/deploy-pages.yml",
+    "format": "oxfmt src scripts index.html 404.html explore research dashboard vite.config.ts tsconfig.json package.json .oxlintrc.json .oxfmtrc.json .github/workflows/deploy-pages.yml",
+    "format:check": "oxfmt --check src scripts index.html 404.html explore research dashboard vite.config.ts tsconfig.json package.json .oxlintrc.json .oxfmtrc.json .github/workflows/deploy-pages.yml",
+    "og": "node scripts/make-social-image.mjs",
+    "test": "node --test src/lib/*.test.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "lucide-react": "1.31.0",
     "react": "19.2.8",
     "react-dom": "19.2.8"
   },

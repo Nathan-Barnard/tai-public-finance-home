@@ -9,6 +9,7 @@ _build/
 node_modules/
 .npm-cache/
 dist/
+dist-ssr/
 coverage/
 .env*
 npm-debug.log*

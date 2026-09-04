@@ -21,7 +21,7 @@
     "typeAware": true,
     "typeCheck": true
   },
-  "ignorePatterns": ["build/**", "dist/**", "coverage/**"],
+  "ignorePatterns": ["build/**", "dist/**", "dist-ssr/**", "coverage/**"],
   "rules": {
     "no-array-constructor": "error",
     "no-var": "error",
@@ -42,6 +42,7 @@
     "typescript/no-namespace": "error",
     "typescript/no-require-imports": "error",
     "typescript/no-unnecessary-type-constraint": "error",
-    "typescript/no-unsafe-function-type": "error"
+    "typescript/no-unsafe-function-type": "error",
+    "jsx-a11y/prefer-tag-over-role": "off"
   }
 }

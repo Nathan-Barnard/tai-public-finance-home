@@ -13,8 +13,8 @@ computational specifications, solver code, or run evidence.
 1. Read [`README.md`](README.md) for the audience, notebook route, and setup.
 2. Read [`CURRENT_PROJECT_CONTEXT.md`](CURRENT_PROJECT_CONTEXT.md) for the present
    scope and upstream repository map.
-3. For website work, treat `app/page.tsx` and `app/globals.css` as single-writer files,
-   and treat `public/content/` as a versioned public release input.
+3. For website work, treat `src/content/` as the single source of public wording and
+   verified links, and keep visual components in `src/components/` free of copy.
 4. Read [`notebooks/README.md`](notebooks/README.md) before creating or revising a
    notebook.
 5. Inspect the exact upstream repository, commit, computation object, and frozen data
@@ -25,7 +25,10 @@ computational specifications, solver code, or run evidence.
 - This repository owns notebook order, reader explanations, thin notebook code,
   publication metadata, and render checks.
 - This repository also owns the public interface, release-ready website copy,
-  illustration assets, static build, and GitHub Pages deployment.
+  illustration assets, the bundled paper PDFs, static build, and GitHub Pages
+  deployment. Public copy must pass `npm run check:copy`: no insurance vocabulary,
+  no internal research identifiers, no numbered chapter ornaments, and none of the
+  phrases the scan lists.
 - The upstream implementation repositories own model code, solvers, tests, dependency
   locks, and immutable computational evidence. Do not fork a solver into a notebook.
 - The research workspace owns claims, assumptions, assurance status, computational
@@ -64,15 +67,18 @@ superseded, or withdrawn.
 
 ## Validation
 
-For the website, use Node.js 22.13 or later:
+For the website, use Node.js 22.18 or later:
 
 ```bash
 npm ci
 npm run check
 ```
 
-Preview it locally with `npm run dev`. A push to `main` deploys the resulting static
-`dist/` directory through `.github/workflows/deploy-pages.yml`.
+`check` runs lint, typecheck, the geometry and lab-model tests, the prerendered
+production build and the public-copy scan. Preview the production build at its
+subpath with `npm run preview`, or develop with `npm run dev`. A push to `main`
+deploys the resulting static `dist/` directory through
+`.github/workflows/deploy-pages.yml`.
 
 For the notebooks, set up a fresh Python environment with:
 
@@ -125,9 +131,10 @@ checkouts of the named upstream repositories.
 
 ## Completion
 
-A website change is complete when lint, type-check, and the static build pass, its public
-claims remain below the release ceiling, and the GitHub Pages URL loads without a
-sign-in. A notebook change is complete when its Markdown and outputs render, its code
+A website change is complete when `npm run check` passes, its public claims remain
+below the release ceiling, every diagram keeps a text alternative and a reduced-motion
+final state, the layout holds at 320, 390, 768, 1024 and 1440 pixels without
+horizontal overflow, and the GitHub Pages URL loads without a sign-in. A notebook change is complete when its Markdown and outputs render, its code
 runs from the declared environment, every displayed result resolves to a pinned public
 source, the interpretation matches the exact model branch and status, and the manifest
 and reader route remain accurate.

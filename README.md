@@ -1,109 +1,113 @@
-# TAI Public Finance Home
+# Automation Risk and the Public Balance Sheet
 
-This repository is the public home for the TAI public-finance paper. The [public
-website](https://nathan-barnard.github.io/tai-public-finance-home/) gives a concise,
-interactive explanation of the economic question. Seven guided Jupyter notebooks then
-develop the models and computational route in depth, explaining both **what the code is
-doing** and **why each step is economically necessary**.
+The public home of the research project *Automation Risk and the Public Balance
+Sheet*. The [website](https://nathan-barnard.github.io/tai-public-finance-home/)
+is a long-form visual argument about one idea: automation affects capitalists and
+workers differently, and public ownership only helps workers when the public asset
+pays in the futures where they are left behind. Seven guided Jupyter notebooks then
+develop the models and computational route in depth.
 
-The aim is not to make readers reverse-engineer several implementation repositories.
-A reader should be able to move from the economic question, through the model and
-numerical method, to the resulting figures and interpretation while retaining a precise
-route back to the underlying code and evidence.
+> **Status:** the website is a complete visual essay with an interactive lab, a
+> research library and a dated research dashboard. Its diagrams are editorial
+> illustrations of a mechanism; none reports measured data, a forecast, a welfare
+> figure or a policy estimate. The notebooks distinguish analytical results,
+> exploratory computations and diagnostics, and withhold numerical claims that lack
+> accepted evidence.
 
-> **Current status:** the unauthenticated public website and complete seven-notebook
-> reader route are live. The website contains illustrations, not policy estimates. The
-> notebooks distinguish analytical results, exploratory computations, diagnostic
-> evidence, and unresolved quantitative objects. Availability means the explanation is
-> complete and runnable; it does not promote draft computation to an accepted paper result.
+## The website
 
-## Start here
+Four static routes, all built from the same content files:
 
-For a short introduction, open the [public
-website](https://nathan-barnard.github.io/tai-public-finance-home/).
+| Route | What it is |
+| --- | --- |
+| `/` | The visual essay: full-viewport scenes, oversized interactive diagrams, an embedded lab |
+| `/explore/` | The Public Balance Sheet Lab: change an automation shock and what the public asset pays, compare public tools |
+| `/research/` | A quiet library: the paper, its diagrams, the notebooks, the technical model, the repositories |
+| `/dashboard/` | A dated monitor of what is established, what is illustrative, what is not yet computed, and what is deliberately not reported |
 
-For the full computational route, open
-[`notebooks/00_start_here.ipynb`](notebooks/00_start_here.ipynb). GitHub renders the
-Markdown, equations, code, and saved output directly in the browser.
+The site is static. It has no sign-in, no server, no private API, no runtime
+database, no tracking and no custom domain. Every route is prerendered to HTML and
+hydrated by a small per-page bundle, so the pages read fully before JavaScript runs.
 
-The intended reading sequence is:
+### Development
 
-| Order | Notebook                                                                                    | Reader question                                                                           | Current state                                 |
-| ----: | ------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | --------------------------------------------- |
-|     0 | Start here                                                                                  | What is the paper doing, and how should these notebooks be read?                          | Available                                     |
-|     1 | [Public intermediation problem](notebooks/01_public_intermediation_problem.ipynb)           | Why do workers and capital markets value automation states differently?                   | Available — analytical/illustrative           |
-|     2 | [Brownian valuation and payoff span](notebooks/02_brownian_valuation_and_payoff_span.ipynb) | Which risks can a public claim hedge, and what remains unspanned?                         | Available — analytical/illustrative           |
-|     3 | [LQ dynamics and impulse responses](notebooks/03_lq_dynamics_and_impulse_responses.ipynb)   | How is the transparent local model solved and checked?                                    | Available — exploratory computation           |
-|     4 | [Nonlinear Ramsey problem](notebooks/04_nonlinear_ramsey_problem.ipynb)                     | How does the richer dynamic problem change the analysis?                                  | Available — formulation/diagnostic            |
-|     5 | [Partial or full automation](notebooks/05_partial_or_full_automation.ipynb)                 | How is uncertainty over the future production regime represented?                         | Available — analytical/quarantined diagnostic |
-|     6 | [Instruments and welfare](notebooks/06_instruments_and_welfare.ipynb)                       | When do taxes, safe positions, and risky claims substitute for or complement one another? | Available — comparison contract               |
-
-The sequence follows the paper's economic argument rather than the directory structure
-of the source code.
-
-## Source repositories
-
-The notebooks will call or document exact versions of the project's public
-implementation repositories:
-
-- [`tai-public-finance`](https://github.com/Nathan-Barnard/tai-public-finance) — the
-  legacy Brownian, LQ, small-risk, and empirical implementation repository;
-- [`tai-public-finance-ramsey-pde`](https://github.com/Nathan-Barnard/tai-public-finance-ramsey-pde)
-  — the nonlinear Ramsey PDE work;
-- [`tai-public-finance-poisson`](https://github.com/Nathan-Barnard/tai-public-finance-poisson)
-  — the marked-Poisson branch;
-- [`tai-public-finance-full-automation`](https://github.com/Nathan-Barnard/tai-public-finance-full-automation)
-  — the full-automation AK work; and
-- [`tai-public-finance-moll-ad-hoc`](https://github.com/Nathan-Barnard/tai-public-finance-moll-ad-hoc)
-  — the fixed-capital state-dependent pricing exercises.
-
-Each result-bearing notebook will name an exact repository commit and the corresponding
-model/specification and run evidence. The list above is a map, not permission to combine
-different model closures as though they were one interchangeable system.
-
-## Repository structure
-
-```text
-app/                        public website interface and styles
-public/content/             versioned, release-ready website wording
-public/figures/             synthetic explanatory figures
-notebooks/                  ordered reader notebooks and their manifest
-notebooks/data/             compact frozen exports with source hashes and status
-scripts/check_notebooks.py  notebook-structure and Markdown-render check
-scripts/refresh_frozen_exports.py  hash-checked export rebuild from upstream checkouts
-.github/workflows/          the same check on GitHub
-CURRENT_PROJECT_CONTEXT.md  maintained scope and next work
-```
-
-## Website development
-
-Requires Node.js 22.13 or later and npm.
+Requires Node.js 22.18 or later and npm.
 
 ```bash
 npm ci
-npm run dev
-npm run check
+npm run dev        # development server at http://localhost:5173/
+npm run check      # lint, typecheck, unit tests, production build, copy scan
+npm run preview    # serves the production build at /tai-public-finance-home/
 ```
 
-Every push to `main` checks and deploys the static site through GitHub Pages. The public
-site has no sign-in, database, private API, or user-data collection.
+`npm run build` runs the client build, a server build, and `scripts/prerender.mjs`,
+which renders each route into its HTML file. `npm run check:copy` then scans the
+rendered pages for banned language, internal research identifiers and numbered
+chapter ornaments. `npm run og` regenerates the social image and touch icon with
+headless Chrome.
 
-## Local use
+Every push to `main` runs the full check and deploys `dist/` to GitHub Pages through
+`.github/workflows/deploy-pages.yml`.
+
+### Layout
+
+```text
+index.html, explore/, research/, dashboard/, 404.html   route entries and metadata
+src/entries/            one client entry per route
+src/pages/              page assemblies
+src/app/                shell, sticky navigation, progress rail, footer
+src/components/         the scenes, diagrams, lab and library
+src/content/            narrative content, verified links, library and dashboard data
+src/lib/                payoff geometry and the lab model, with node:test tests
+src/hooks/              media queries, in-view, scroll steps, tabs, autoplay
+src/styles/             design tokens, typography, scene, lab and library styles
+public/paper/           the paper and its online supplement (PDF)
+public/fonts/           bundled Latin subsets of Fraunces, Inter and JetBrains Mono
+scripts/                prerender, copy scan, social image
+notebooks/              ordered reader notebooks and their manifest
+notebooks/data/         compact frozen exports with source hashes and status
+```
+
+Narrative content lives in `src/content/story.ts` as a list of sections, each with a
+visual specification; the components in `src/components/` draw them. Every payoff
+diagram is computed from `src/lib/geometry.ts`, so a public position only ever moves
+along a line and never rotates it.
+
+## The notebooks
+
+Open [`notebooks/00_start_here.ipynb`](notebooks/00_start_here.ipynb). GitHub renders
+the Markdown, equations, code and saved output in the browser.
+
+| Order | Notebook | Reader question | Evidence shown |
+| ----: | --- | --- | --- |
+| 0 | Start here | What is the paper doing, and how should these notebooks be read? | Reader orientation |
+| 1 | [The public-intermediation problem](notebooks/01_public_intermediation_problem.ipynb) | Why do workers and capital markets value automation states differently? | Analytical, with illustration |
+| 2 | [Brownian valuation and payoff span](notebooks/02_brownian_valuation_and_payoff_span.ipynb) | Which risks can one public claim reach, and what remains outside it? | Analytical geometry, with illustration |
+| 3 | [LQ dynamics and impulse responses](notebooks/03_lq_dynamics_and_impulse_responses.ipynb) | How is the transparent local model solved and checked? | Exploratory local computation |
+| 4 | [The nonlinear Ramsey problem](notebooks/04_nonlinear_ramsey_problem.ipynb) | How does the richer dynamic problem change the analysis? | Formulation and pre-solve diagnostic |
+| 5 | [Partial or full automation](notebooks/05_partial_or_full_automation.ipynb) | How is uncertainty over the future production regime represented? | Analytical rank result; diagnostics withheld |
+| 6 | [Instruments and welfare](notebooks/06_instruments_and_welfare.ipynb) | When do taxes, safe positions and risky claims substitute for or complement one another? | Comparison design; no numerical welfare yet |
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 python3 -m pip install -r requirements-dev.txt
 python3 scripts/check_notebooks.py --execute
-jupyter lab
 ```
 
-The full check executes every notebook in memory and converts it to HTML as well as
-validating its structure. Run `python3 scripts/check_notebooks.py` for the faster
-structure-and-render-only check.
+## Source repositories
 
-## Relationship between the website and notebooks
+- [`tai-public-finance`](https://github.com/Nathan-Barnard/tai-public-finance): the
+  continuous-shock, local, small-risk and earlier empirical implementation;
+- [`tai-public-finance-poisson`](https://github.com/Nathan-Barnard/tai-public-finance-poisson):
+  the two-successor marked-event branch;
+- [`tai-public-finance-full-automation`](https://github.com/Nathan-Barnard/tai-public-finance-full-automation):
+  the labour-light, capital-only programme;
+- [`tai-public-finance-moll-ad-hoc`](https://github.com/Nathan-Barnard/tai-public-finance-moll-ad-hoc):
+  fixed-capital state-dependent pricing exercises;
+- `tai-public-finance-ramsey-pde`: the nonlinear five-state problem, private while
+  under review.
 
-The homepage is the concise public entry point. The notebooks are the long-form
-computational explanation. Both may use frozen figures or compact data exports, but
-neither replaces the underlying implementation repositories or research records.
+Each result-bearing notebook names an exact repository commit and the corresponding
+evidence. The list is a map, not permission to combine different model closures as
+though they were one system.
