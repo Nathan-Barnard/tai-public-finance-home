@@ -24,6 +24,8 @@ export default defineConfig(({ command, isPreview, isSsrBuild }) => ({
           input: {
             home: `${root}index.html`,
             explore: `${root}explore/index.html`,
+            scenarios: `${root}scenarios/index.html`,
+            findings: `${root}findings/index.html`,
             research: `${root}research/index.html`,
             dashboard: `${root}dashboard/index.html`,
             notFound: `${root}404.html`,

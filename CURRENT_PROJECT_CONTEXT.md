@@ -17,9 +17,12 @@ approaches, diagnostics and results into an ordered computational narrative.
 
 ## Current state
 
-The website was rebuilt on 4 September 2026 as four prerendered static routes under
+The website was rebuilt on 4 September 2026 as six prerendered static routes under
 `/tai-public-finance-home/`: the visual essay, the Public Balance Sheet Lab, the
-research library and a dated research dashboard. All diagrams are computed SVG; the
+scenarios page, the findings page, the research library and an indicators dashboard
+that tracks the labour share, measures of automation, asset values, interest rates,
+public debt, and work and wages across seven economies from public sources, frozen at
+build time. All diagrams are computed SVG; the
 payoff diagrams use exact projection geometry. The site bundles its fonts, includes
 the paper and supplement PDFs under `public/paper/`, and carries no sign-in, server,
 database, tracking or custom domain.
@@ -41,5 +44,5 @@ As upstream work is promoted, update the existing notebook and the dashboard ent
 rather than adding a rival result track. The highest-value upgrades remain a reviewed
 local-model bundle, a corrected-provenance nonlinear stage, closed coverage of the
 two-successor case, and an immutable, independently reviewed six-cell comparison
-bundle. Every upgrade must replace the evidence label in `src/content/dashboard.ts` in
+bundle. Every upgrade must replace the evidence label in `src/content/findings.ts` in
 the same commit as its figures and data.

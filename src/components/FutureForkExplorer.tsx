@@ -14,9 +14,9 @@ type Props = {
   caveat: string;
 };
 
-const TARGET: Vec2 = [0.62, 0.78];
-const FIRST: Vec2 = fromAngle(22);
-const SECOND_INDEPENDENT: Vec2 = fromAngle(78);
+export const TARGET: Vec2 = [0.62, 0.78];
+export const FIRST: Vec2 = fromAngle(22);
+export const SECOND_INDEPENDENT: Vec2 = fromAngle(78);
 
 const menus = [
   { id: 'one', label: 'One inherited position' },
@@ -165,7 +165,7 @@ const forkLayouts = {
   },
 };
 
-function ForkSvg({
+export function ForkSvg({
   id,
   layout,
   menu,

@@ -14,7 +14,4 @@ transition account. Five separate appendices provide 101 pages of supporting mat
 - [Event-Arrival Appendix](../public/paper/appendix-event-arrival.pdf) — 20 pages
 - [Descriptive Evidence Appendix](../public/paper/appendix-descriptive-evidence.pdf) — 11 pages
 
-The set remains a conditional analytical draft rather than a submission-ready release.
-The historical evidence is descriptive and provisional. The local-quadratic results are
-exploratory, and the fixed-policy and event-arrival calculations retain the scope and
-evidence limits stated in the documents.
+

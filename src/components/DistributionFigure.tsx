@@ -15,10 +15,10 @@ type Props = {
 };
 
 const angle: Record<Move, number> = {
-  falls: 26,
+  falls: 24,
   flat: 0,
-  rises: -20,
-  'rises-faster': -40,
+  rises: -16,
+  'rises-faster': -30,
 };
 
 const word: Record<Move, string> = {
@@ -30,31 +30,31 @@ const word: Record<Move, string> = {
 
 const layouts = {
   wide: {
-    W: 960,
-    H: 560,
+    W: 1120,
+    H: 620,
     startX: 110,
     shockX: 380,
-    len: 460,
-    rows: [170, 400],
+    len: 380,
+    rows: [230, 460],
     fs: 24,
     fsSmall: 20,
     indicators: [
-      [110, 505],
-      [420, 505],
+      [110, 585],
+      [420, 585],
     ] as const,
   },
   tall: {
     W: 640,
-    H: 700,
+    H: 740,
     startX: 36,
     shockX: 250,
     len: 330,
-    rows: [170, 400],
+    rows: [230, 450],
     fs: 28,
     fsSmall: 24,
     indicators: [
-      [36, 570],
-      [36, 640],
+      [36, 620],
+      [36, 690],
     ] as const,
   },
 };

@@ -28,7 +28,7 @@ const social = `<!doctype html><html><head><meta charset="utf-8"><style>${shared
   svg { position: absolute; right: 0; top: 0; }
 </style></head><body>
   <p class="eyebrow">The public balance sheet and automation</p>
-  <h1>Automation affects capitalists and workers differently.</h1>
+  <h1>Automation pays the people who own it.</h1>
   <p class="site">nathan-barnard.github.io/tai-public-finance-home</p>
   <svg width="560" height="630" viewBox="0 0 560 630">
     <line x1="150" y1="40" x2="150" y2="600" stroke="#101d1b" stroke-width="2" stroke-dasharray="6 10"/>

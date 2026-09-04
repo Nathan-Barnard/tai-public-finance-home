@@ -43,7 +43,7 @@ const layouts = {
     unit: 330,
     fs: 24,
     fsBig: 26,
-    fsSmall: 22,
+    fsSmall: 24,
   },
 };
 
@@ -76,6 +76,17 @@ export function PayoffField({
   const inkColor = dark ? 'var(--paper)' : 'var(--ink)';
   const mute = dark ? 'var(--text-on-ink-mute)' : 'var(--text-mute)';
 
+  // Scale a vector so its drawn tip stays inside the frame with a margin.
+  const fit = (v: Vec2): Vec2 => {
+    let t = 1;
+    const [x, y] = toSvg(v);
+    if (x < 30) t = Math.min(t, (origin[0] - 30) / (origin[0] - x));
+    if (x > W - 30) t = Math.min(t, (W - 30 - origin[0]) / (x - origin[0]));
+    if (y > H - 40) t = Math.min(t, (H - 40 - origin[1]) / (y - origin[1]));
+    if (y < 30) t = Math.min(t, (origin[1] - 30) / (origin[1] - y));
+    return scale(v, Math.max(0.15, t));
+  };
+  const clampY = (y: number) => Math.min(H - 14, Math.max(24, y));
   const eTip = toSvg(exposure);
   const hasExposure = norm(exposure) > 1e-6;
   const pTip = toSvg(projection.projection);
@@ -233,7 +244,7 @@ export function PayoffField({
       {/* payoff lines */}
       {payoffs.map((a, index) => {
         const line = lineFor(a);
-        const tip = toSvg(a);
+        const tip = toSvg(fit(a));
         return (
           <g key={index}>
             <line
@@ -258,7 +269,7 @@ export function PayoffField({
             />
             <text
               x={tip[0] + (tip[0] > W * 0.6 ? -14 : 14)}
-              y={tip[1] + (tip[1] < 70 ? 34 : 6)}
+              y={clampY(tip[1] + (tip[1] < 70 ? 34 : 6))}
               textAnchor={tip[0] > W * 0.6 ? 'end' : 'start'}
               fontSize={L.fs}
               className="svg-display"
@@ -373,8 +384,9 @@ export function PayoffField({
             strokeWidth="3"
           />
           <text
-            x={posPoint[0] + 24}
-            y={posPoint[1] - 18}
+            x={posPoint[0] + (posPoint[0] > W * 0.6 ? -24 : 24)}
+            y={clampY(posPoint[1] - 18)}
+            textAnchor={posPoint[0] > W * 0.6 ? 'end' : 'start'}
             fontSize={L.fsSmall}
             className="svg-text"
             fill={inkColor}
