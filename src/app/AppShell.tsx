@@ -1,26 +1,23 @@
 import type { ReactNode } from 'react';
 
+import type { NavId } from '@/content/site';
+
+import { Masthead } from './Masthead';
 import { SiteFooter } from './SiteFooter';
-import { StickyStoryNav, type NavPage } from './StickyStoryNav';
 
-type Props = {
-  page: NavPage;
+export function AppShell({
+  current,
+  children,
+}: {
+  current: NavId;
   children: ReactNode;
-  currentChapter?: string | null;
-  progress?: number;
-};
-
-export function AppShell({ page, children, currentChapter, progress }: Props) {
+}) {
   return (
     <>
       <a href="#main" className="skip-link">
         Skip to content
       </a>
-      <StickyStoryNav
-        page={page}
-        currentChapter={currentChapter}
-        progress={progress}
-      />
+      <Masthead current={current} />
       <main id="main" tabIndex={-1}>
         {children}
       </main>

@@ -11,13 +11,12 @@ export function href(path: string): string {
 
 export const routes = {
   home: href(''),
+  evidence: href('evidence/'),
   explore: href('explore/'),
-  scenarios: href('scenarios/'),
-  findings: href('findings/'),
   research: href('research/'),
-  dashboard: href('dashboard/'),
+  indicators: href('dashboard/'),
 } as const;
 
-export function homeAnchor(id: string): string {
-  return `${routes.home}#${id}`;
+export function evidenceAnchor(id: string): string {
+  return `${routes.evidence}#${id}`;
 }

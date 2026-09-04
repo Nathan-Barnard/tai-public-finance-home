@@ -6,12 +6,25 @@ import { links } from './links';
 
 export const indicatorsMeta = {
   eyebrow: 'Indicators',
-  headline: 'An up-to-date monitor of the facts behind the argument.',
-  lead: 'The essay argues about who owns the gains from automation and when a public asset pays. This page tracks the series that argument turns on, in several economies: the labour share, measures of automation, asset values, interest rates, public debt, and work and wages.',
+  headline: 'Longer-run indicators behind the question.',
+  lead: 'The site asks who gains from economic growth and when a public investment helps. This page tracks the longer series behind that question in several economies: the share of income going to labour, measures of automation, asset values, interest rates, government debt, and work and wages.',
   cadence:
     'Refreshed by re-running the fetch script and rebuilding the site. The page makes no requests while you read it.',
-  dataHref: `${links.siteRepo}/blob/main/src/data/indicators.json`,
-  scriptHref: `${links.siteRepo}/blob/main/scripts/fetch-indicators.mjs`,
+  dataHref: `${links.code}/blob/main/src/data/indicators.json`,
+  scriptHref: `${links.code}/blob/main/scripts/fetch-indicators.mjs`,
+};
+
+// Where a source's own note uses American spelling or wording that does not
+// suit this site, the page shows our wording instead. The published note stays
+// in the data file, so provenance is unchanged.
+export const noteOverrides: Record<string, string> = {
+  'ai-adoption':
+    'The share of surveyed companies using AI in at least one business function. Use covers a wide range, from early experiments to systems running across the whole business.',
+};
+
+export const titleOverrides: Record<string, string> = {
+  'labour-share-us-quarterly':
+    'Labour share, United States nonfarm business sector',
 };
 
 export const places = [
@@ -36,7 +49,7 @@ export const indicatorGroups: IndicatorGroup[] = [
     id: 'income',
     title: 'Who gets the income',
     intro:
-      'The essay opens with the split between worker income and capital income. These series show that split as it is measured: the share of national income paid to labour, and the share taken by profits.',
+      'The site opens with the split between worker income and capital income. These series show that split as it is measured: the share of national income paid to labour, and the share taken by profits.',
     charts: [
       {
         id: 'labour-share',
@@ -68,7 +81,7 @@ export const indicatorGroups: IndicatorGroup[] = [
       },
       {
         id: 'ai-adoption',
-        why: 'The share of surveyed organisations reporting AI use. Adoption is when the shock reaches wages and tasks rather than share prices.',
+        why: 'The share of surveyed organisations reporting AI use. Adoption is when the change reaches wages and tasks rather than share prices.',
       },
       {
         id: 'software-investment-us',
@@ -84,11 +97,11 @@ export const indicatorGroups: IndicatorGroup[] = [
     id: 'assets',
     title: 'Asset values',
     intro:
-      'The essay says capital owners share in the upside automatically because asset values rise. These are the asset values.',
+      'Capital owners share in the upside partly because asset values rise. These are the asset values.',
     charts: [
       {
         id: 'share-prices',
-        why: 'Share price indices in seven economies. This is the payoff of the assets that a public balance sheet could hold, and the wealth that workers without claims do not receive.',
+        why: 'Share price indices in seven economies. These are the assets a public fund could hold, and the wealth that workers without claims do not receive.',
       },
       {
         id: 'sp500',
@@ -104,7 +117,7 @@ export const indicatorGroups: IndicatorGroup[] = [
     id: 'rates',
     title: 'Interest rates',
     intro:
-      'Markets put a price on a dollar arriving tomorrow. The safe rate is that price, and it is what saving and borrowing on the public balance sheet cost.',
+      'Markets put a price on a pound or a dollar arriving later. The safe rate is that price, and it is what government saving and borrowing cost.',
     charts: [
       {
         id: 'long-rates',
@@ -118,7 +131,7 @@ export const indicatorGroups: IndicatorGroup[] = [
   },
   {
     id: 'balance-sheet',
-    title: 'The public balance sheet',
+    title: 'Government finances',
     intro:
       'A government that wants to hold claims on behalf of workers must be able to finance them. Gross debt is the simplest measure of how much room is left.',
     charts: [
@@ -136,11 +149,11 @@ export const indicatorGroups: IndicatorGroup[] = [
     charts: [
       {
         id: 'unemployment',
-        why: 'Unemployment in seven economies. Job loss is the sharpest form of the worker shortfall the essay describes.',
+        why: 'Unemployment in seven economies. Job loss is the sharpest form of weakness in worker income.',
       },
       {
         id: 'us-real-earnings',
-        why: 'Real median weekly earnings of full-time workers in the United States, in constant prices. The flat decades are the point of the essay.',
+        why: 'Real median weekly earnings of full-time workers in the United States, in constant prices. The flat decades are the reason the question is asked.',
       },
     ],
   },

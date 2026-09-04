@@ -8675,7 +8675,7 @@
           ]
         }
       ],
-      "note": "The most recent year is an IMF estimate. Projections beyond it are not shown."
+      "note": "The most recent year is an IMF estimate. Later years are not shown."
     },
     {
       "id": "unemployment",
@@ -9030,7 +9030,7 @@
           ]
         }
       ],
-      "note": "The most recent year is an IMF estimate. Projections beyond it are not shown."
+      "note": "The most recent year is an IMF estimate. Later years are not shown."
     },
     {
       "id": "us-real-earnings",

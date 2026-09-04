@@ -4,23 +4,25 @@ import { routes } from '@/lib/paths';
 
 export default function NotFoundPage() {
   return (
-    <AppShell page="other">
-      <section className="band not-found" aria-labelledby="nf-title">
+    <AppShell current="other">
+      <section
+        className="section section--plain page-head"
+        aria-labelledby="nf-title"
+      >
         <div className="wrap">
-          <p className="t-eyebrow">Page not found</p>
-          <h1 id="nf-title" className="t-h2">
+          <h1 id="nf-title" className="t-hero page-head__title">
             That page is not on this site.
           </h1>
-          <p className="t-lead measure-wide">
-            The visual argument, the lab, the library and the dashboard are all
-            still here.
+          <p className="t-lead measure">
+            The question, the evidence behind it, the thought experiment and the
+            research are all still here.
           </p>
-          <p className="hero__actions">
+          <p className="actions">
             <a className="btn" href={routes.home}>
-              Start the visual essay <ArrowRight />
+              Start at the beginning <ArrowRight />
             </a>
-            <a className="btn btn--ghost" href={routes.explore}>
-              Open the lab <ArrowRight />
+            <a className="link" href={routes.evidence}>
+              See what history shows <ArrowRight />
             </a>
           </p>
         </div>

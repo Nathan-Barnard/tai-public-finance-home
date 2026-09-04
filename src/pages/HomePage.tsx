@@ -1,183 +1,213 @@
-import { lazy, Suspense } from 'react';
-
 import { AppShell } from '@/app/AppShell';
-import { StoryProgress } from '@/app/StoryProgress';
-import { useReadingProgress } from '@/app/useReadingProgress';
-import { ClosingScene } from '@/components/ClosingScene';
-import { DesignQuestions } from '@/components/DesignQuestions';
-import { DistributionScenarioTabs } from '@/components/DistributionScenarioTabs';
-import { FutureForkExplorer } from '@/components/FutureForkExplorer';
-import { HeroSplitField } from '@/components/HeroSplitField';
-import { ArrowRight } from '@/components/Icons';
-import { ImpactTransitionTimeline } from '@/components/ImpactTransitionTimeline';
-import { OwnershipFlowMap } from '@/components/OwnershipFlowMap';
-import { PayoffAlignmentScene } from '@/components/PayoffAlignmentScene';
-import { PayoffSpaceExplorer } from '@/components/PayoffSpaceExplorer';
-import { PolicyToolsStage } from '@/components/PolicyToolsStage';
-import { SectionHeader } from '@/components/SectionHeader';
-import { StatePayoffTheatre } from '@/components/StatePayoffTheatre';
-import { ThetaExplainer } from '@/components/ThetaExplainer';
-import { navChapters, storySections } from '@/content/story';
-import type { StorySection } from '@/content/types';
-import { useInView } from '@/hooks/useInView';
-
-const PublicBalanceSheetLab = lazy(
-  () => import('@/components/PublicBalanceSheetLab'),
-);
-
-const chapterIds = navChapters.map((chapter) => chapter.id);
+import { Disclosure } from '@/components/Disclosure';
+import { Exhibit } from '@/components/Exhibit';
+import { exhibitChart } from '@/components/ExhibitCharts';
+import { ExploreTool } from '@/components/ExploreTool';
+import { ArrowRight, ArrowUpRight } from '@/components/Icons';
+import { PanelGrid } from '@/components/PanelGrid';
+import { dataLinkLabel, exhibits } from '@/content/evidence';
+import {
+  closing,
+  distribution,
+  explorePreview,
+  hero,
+  history,
+  model,
+  policy,
+  useful,
+} from '@/content/home';
+import { evidenceAnchor } from '@/lib/paths';
 
 export default function HomePage() {
-  const { progress, current } = useReadingProgress(chapterIds);
   return (
-    <AppShell page="home" currentChapter={current} progress={progress}>
-      <StoryProgress progress={progress} currentChapter={current} />
-      {storySections.map((section) => (
-        <Scene key={section.slug} section={section} />
-      ))}
-    </AppShell>
-  );
-}
+    <AppShell current="home">
+      {/* Hero: the question, not a conclusion, and no chart. */}
+      <section
+        className="section section--plain home-hero"
+        aria-labelledby="hero-title"
+      >
+        <div className="wrap home-hero__inner">
+          <p className="t-eyebrow">{hero.eyebrow}</p>
+          <h1 id="hero-title" className="t-hero home-hero__title">
+            {hero.headline}
+          </h1>
+          <p className="t-lead measure home-hero__body">{hero.body}</p>
+          <p className="actions">
+            <a className="btn" href={hero.primary.href}>
+              {hero.primary.label} <ArrowRight />
+            </a>
+            <a className="link" href={hero.secondary.href}>
+              {hero.secondary.label} <ArrowRight />
+            </a>
+          </p>
+        </div>
+      </section>
 
-function Scene({ section }: { section: StorySection }) {
-  const kind = section.visual.kind;
-  const dark = section.theme === 'ink';
-  const className = `band scene scene--${kind} band--${section.theme} ${dark ? 'on-ink' : ''}`;
-  return (
-    <section
-      id={section.slug}
-      className={className}
-      aria-labelledby={`${section.slug}-title`}
-    >
-      <SceneBody section={section} />
-    </section>
-  );
-}
+      <section className="section section--tint" aria-labelledby="split-title">
+        <div className="wrap">
+          <header className="section__head">
+            <p className="t-eyebrow">{distribution.eyebrow}</p>
+            <h2 id="split-title" className="t-h2">
+              {distribution.headline}
+            </h2>
+            <p className="t-lead measure">{distribution.body}</p>
+          </header>
+          <PanelGrid
+            panels={distribution.panels}
+            variant="quad"
+            label="Four possible outcomes, each equally weighted"
+          />
+          <p className="section__closing t-body measure">
+            {distribution.closing}
+          </p>
+          <Disclosure
+            title={distribution.disclosure.title}
+            body={distribution.disclosure.body}
+          />
+        </div>
+      </section>
 
-function SceneBody({ section }: { section: StorySection }) {
-  const visual = section.visual;
-  switch (visual.kind) {
-    case 'hero-split':
-      return <Hero section={section} />;
-    case 'distribution':
-      return (
-        <DistributionScenarioTabs section={section} states={visual.states} />
-      );
-    case 'ownership-flow':
-      return (
-        <OwnershipFlowMap
-          section={section}
-          actors={visual.actors}
-          steps={visual.steps}
-        />
-      );
-    case 'state-payoff':
-      return (
-        <StatePayoffTheatre
-          section={section}
-          lanes={visual.lanes}
-          after={visual.after}
-        />
-      );
-    case 'theta':
-      return <ThetaExplainer section={section} />;
-    case 'payoff-alignment':
-      return (
-        <PayoffAlignmentScene
-          section={section}
-          cases={visual.cases}
-          caveat={visual.caveat}
-        />
-      );
-    case 'payoff-space':
-      return <PayoffSpaceExplorer section={section} modes={visual.modes} />;
-    case 'instrument-stage':
-      return (
-        <PolicyToolsStage
-          section={section}
-          instruments={visual.instruments}
-          takeaways={visual.takeaways}
-        />
-      );
-    case 'timeline':
-      return (
-        <ImpactTransitionTimeline section={section} beats={visual.beats} />
-      );
-    case 'successor-space':
-      return (
-        <FutureForkExplorer
-          section={section}
-          states={visual.states}
-          caveat={visual.caveat}
-        />
-      );
-    case 'questions':
-      return <DesignQuestions section={section} questions={visual.questions} />;
-    case 'lab-embed':
-      return <LabEmbed section={section} />;
-    case 'closing':
-      return <ClosingScene section={section} actions={visual.actions} />;
-  }
-}
+      <section className="section" id="history" aria-labelledby="history-title">
+        <div className="wrap">
+          <header className="section__head">
+            <p className="t-eyebrow">{history.eyebrow}</p>
+            <h2 id="history-title" className="t-h2">
+              {history.headline}
+            </h2>
+            <p className="t-lead measure">{history.body}</p>
+          </header>
+          <div className="exhibit-grid">
+            {exhibits.map((exhibit) => (
+              <Exhibit
+                key={exhibit.id}
+                id={exhibit.id}
+                size="compact"
+                title={exhibit.homeTitle}
+                chart={exhibitChart[exhibit.id]}
+                interpretation={exhibit.interpretation}
+                supporting={exhibit.supporting}
+                note={exhibit.note}
+                link={{
+                  label: dataLinkLabel,
+                  href: evidenceAnchor(exhibit.id),
+                }}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
 
-function Hero({ section }: { section: StorySection }) {
-  return (
-    <div className="wrap hero">
-      <p className="t-eyebrow hero__eyebrow">{section.eyebrow}</p>
-      <h1 className="t-hero hero__title" id={`${section.slug}-title`}>
-        {section.headline}
-      </h1>
-      <div className="hero__row">
-        <div className="hero__copy stack">
-          {section.body.map((line) => (
-            <p key={line} className="t-lead">
-              {line}
+      <section className="section section--tint" aria-labelledby="policy-title">
+        <div className="wrap">
+          <header className="section__head">
+            <p className="t-eyebrow">{policy.eyebrow}</p>
+            <h2 id="policy-title" className="t-h2">
+              {policy.headline}
+            </h2>
+          </header>
+          <PanelGrid panels={policy.panels} variant="pair" />
+          <p className="section__closing t-body measure">{policy.closing}</p>
+          <Disclosure
+            title={policy.disclosure.title}
+            body={policy.disclosure.body}
+          />
+        </div>
+      </section>
+
+      <section className="section" aria-labelledby="useful-title">
+        <div className="wrap">
+          <header className="section__head">
+            <p className="t-eyebrow">{useful.eyebrow}</p>
+            <h2 id="useful-title" className="t-h2">
+              {useful.headline}
+            </h2>
+            <p className="t-lead measure">{useful.body}</p>
+          </header>
+          <p className="figure-label">{useful.figureLabel}</p>
+          <PanelGrid panels={useful.panels} variant="pair" />
+          <p className="section__closing t-body measure">{useful.closing}</p>
+          <Disclosure
+            title={useful.disclosure.title}
+            sections={useful.disclosure.sections}
+          />
+        </div>
+      </section>
+
+      <section className="section section--tint" aria-labelledby="model-title">
+        <div className="wrap model-block">
+          <header className="section__head">
+            <p className="t-eyebrow">{model.eyebrow}</p>
+            <h2 id="model-title" className="t-h2">
+              {model.headline}
+            </h2>
+          </header>
+          <div className="model-block__body">
+            {model.body.map((paragraph) => (
+              <p key={paragraph} className="t-body measure">
+                {paragraph}
+              </p>
+            ))}
+            <p className="actions">
+              {model.actions.map((action) => (
+                <a
+                  key={action.label}
+                  className="link"
+                  href={action.href}
+                  rel={
+                    'external' in action && action.external
+                      ? 'noopener'
+                      : undefined
+                  }
+                >
+                  {action.label}{' '}
+                  {'external' in action && action.external ? (
+                    <ArrowUpRight />
+                  ) : (
+                    <ArrowRight />
+                  )}
+                </a>
+              ))}
             </p>
-          ))}
-          <p className="hero__actions">
-            {section.actions?.map((action, index) => (
-              <a
-                key={action.label}
-                href={action.href}
-                className={index === 0 ? 'btn' : 'btn btn--ghost'}
-              >
+          </div>
+        </div>
+      </section>
+
+      <section className="section" aria-labelledby="explore-title">
+        <div className="wrap">
+          <header className="section__head">
+            <p className="t-eyebrow">{explorePreview.eyebrow}</p>
+            <h2 id="explore-title" className="t-h2">
+              {explorePreview.headline}
+            </h2>
+            <p className="t-lead measure">{explorePreview.body}</p>
+          </header>
+          <ExploreTool compact />
+          <p className="actions explore-preview__action">
+            <a className="btn btn--ghost" href={explorePreview.action.href}>
+              {explorePreview.action.label} <ArrowRight />
+            </a>
+          </p>
+        </div>
+      </section>
+
+      <section
+        className="section section--tint"
+        aria-labelledby="closing-title"
+      >
+        <div className="wrap closing-block">
+          <h2 id="closing-title" className="t-h2">
+            {closing.headline}
+          </h2>
+          <p className="t-lead measure">{closing.body}</p>
+          <p className="actions">
+            {closing.actions.map((action) => (
+              <a key={action.label} className="link" href={action.href}>
                 {action.label} <ArrowRight />
               </a>
             ))}
           </p>
         </div>
-        <HeroSplitField />
-      </div>
-    </div>
-  );
-}
-
-function LabEmbed({ section }: { section: StorySection }) {
-  const [ref, near] = useInView<HTMLDivElement>({
-    rootMargin: '600px 0px',
-    threshold: 0,
-    once: true,
-  });
-  return (
-    <div className="wrap" ref={ref}>
-      <SectionHeader section={section} />
-      <div className="lab-slot">
-        {near ? (
-          <Suspense fallback={<LabPlaceholder />}>
-            <PublicBalanceSheetLab variant="embed" />
-          </Suspense>
-        ) : (
-          <LabPlaceholder />
-        )}
-      </div>
-    </div>
-  );
-}
-
-function LabPlaceholder() {
-  return (
-    <div className="lab-placeholder" aria-busy="true">
-      <p className="t-small">The lab loads when you reach it.</p>
-    </div>
+      </section>
+    </AppShell>
   );
 }

@@ -13,7 +13,9 @@ import {
   indicatorGroups,
   indicatorsMeta,
   methodology,
+  noteOverrides,
   places,
+  titleOverrides,
 } from '@/content/indicators';
 import data from '@/data/indicators.json';
 import { routes } from '@/lib/paths';
@@ -48,7 +50,7 @@ function niceDate(iso: string): string {
 export default function DashboardPage() {
   const [highlight, setHighlight] = useState<string | null>(null);
   return (
-    <AppShell page="dashboard">
+    <AppShell current="indicators">
       <section
         className="band band--tight dash-hero"
         aria-labelledby="dash-title"
@@ -179,7 +181,7 @@ export default function DashboardPage() {
             <a href={indicatorsMeta.scriptHref} rel="noopener">
               The fetch script <ArrowUpRight className="inline-icon" />
             </a>{' '}
-            · <a href={routes.findings}>Where the research stands</a>
+            · <a href={routes.research}>Research behind the site</a>
           </p>
         </div>
       </section>
@@ -205,7 +207,7 @@ function IndicatorPanel({
     <article className="indicator" aria-labelledby={`${chart.id}-title`}>
       <header className="indicator__head">
         <h3 id={`${chart.id}-title`} className="indicator__title">
-          {chart.title}
+          {titleOverrides[chart.id] ?? chart.title}
         </h3>
         <p className="indicator__meta">
           {chart.unit} · {chart.frequency} · latest{' '}
@@ -242,7 +244,11 @@ function IndicatorPanel({
         })}
       </ul>
       <p className="indicator__why t-body">{why}</p>
-      {chart.note && <p className="indicator__note t-small">{chart.note}</p>}
+      {(noteOverrides[chart.id] ?? chart.note) && (
+        <p className="indicator__note t-small">
+          {noteOverrides[chart.id] ?? chart.note}
+        </p>
+      )}
       <p className="indicator__source t-small">
         Source:{' '}
         <a href={chart.source.url} rel="noopener">

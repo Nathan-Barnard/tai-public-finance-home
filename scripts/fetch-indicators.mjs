@@ -509,7 +509,7 @@ await chart('government-debt', async () => {
     series: codes
       .filter((c) => data[c])
       .map((c) => series(PLACES[c], `GGXWDG_NGDP/${c}`, roundAll(data[c], 1))),
-    note: 'The most recent year is an IMF estimate. Projections beyond it are not shown.',
+    note: 'The most recent year is an IMF estimate. Later years are not shown.',
   };
 });
 
@@ -528,7 +528,7 @@ await chart('unemployment', async () => {
     series: codes
       .filter((c) => data[c])
       .map((c) => series(PLACES[c], `LUR/${c}`, roundAll(data[c], 1))),
-    note: 'The most recent year is an IMF estimate. Projections beyond it are not shown.',
+    note: 'The most recent year is an IMF estimate. Later years are not shown.',
   };
 });
 
